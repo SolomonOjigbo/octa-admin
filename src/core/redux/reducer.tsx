@@ -6,6 +6,9 @@ import globalProductReducer from "./slices/globalProduct";
 import globalCategoryReducer from "./slices/globalCategory";
 import globalBrandReducer from "./slices/globalBrand";
 import globalSupplierReducer from "./slices/globalSupplier";
+import customer from "./slices/customer";
+import user from "./slices/user"
+import store from "./slices/store"
 
 
 import initialState from "./initial.value";
@@ -18,6 +21,9 @@ const rootReducer = combineReducers({
   globalCategory: globalCategoryReducer,
   globalBrand: globalBrandReducer,
   globalSupplier: globalSupplierReducer,
+  customer: customer,
+  user: user,
+  store: store
 });
 
 export default rootReducer;

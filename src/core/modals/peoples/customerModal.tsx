@@ -1,69 +1,81 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createGlobalSupplier } from "../../../core/redux/slices/globalSupplier";
+import { createGlobalCustomer } from "../../../core/redux/slices/customer";
 
-const SupplierModal = () => {
+const CustomerModal = () => {
   const dispatch = useDispatch();
 
   const [form, setForm] = useState({
+    tenantId: "",
     name: "",
     email: "",
     phone: "",
-    paymentTerms: "",
     address: "",
-    notes: "",
-   leadTime: 0,
-    tenantId: "",   
+    gender: "",
+    dateOfBirth: "",
+    isActive: true,
+    loyaltyNumber: "",
+    segment: "",
+    tags: [] as string[],
+    defaultPaymentTerm: "",
   });
 
-  const handleChange = (e: any) => {
-  const { name, value } = e.target;
+const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const { name, value, type } = e.target;
 
-  if (name === "leadTime") {
-    setForm({ ...form, leadTime: Number(value) });
+  if (type === "checkbox" && e.target instanceof HTMLInputElement) {
+    setForm({ ...form, [name]: e.target.checked });
   } else {
     setForm({ ...form, [name]: value });
   }
 };
 
 
-  const handleSubmit = () => {
-    document.getElementById("supplier-modal-close-btn")?.click();
+  const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const tagsArray = e.target.value.split(",").map(tag => tag.trim());
+    setForm({ ...form, tags: tagsArray });
+  };
 
-    // Payload must match your API DTO
+  const handleSubmit = () => {
+    document.getElementById("customer-modal-close-btn")?.click();
+
     const payload = {
-      name: form.name,
-      email: form.email,
-      phone: form.phone,
-      paymentTerms: form.paymentTerms,
-      address: form.address,
-      notes: form.notes,
-      leadTime: Number(form.leadTime),
-      //leadTime: form.leadTime,
       tenantId: form.tenantId,
-      // ❗ NO IMAGE
-      // ❗ NO isActive (taken from supplier.tenant.isActive backend side)
+      name: form.name,
+      email: form.email || null,
+      phone: form.phone || null,
+      address: form.address || null,
+      gender: form.gender || null,
+      dateOfBirth: form.dateOfBirth || null,
+      isActive: form.isActive,
+      loyaltyNumber: form.loyaltyNumber || null,
+      segment: form.segment || null,
+      tags: form.tags.length > 0 ? form.tags : null,
+      defaultPaymentTerm: form.defaultPaymentTerm || null,
     };
 
-    dispatch<any>(createGlobalSupplier(payload));
+    dispatch<any>(createGlobalCustomer(payload));
 
-    // Reset
+    // Reset form
     setForm({
+      tenantId: "",
       name: "",
       email: "",
       phone: "",
       address: "",
-      notes: "",
-      paymentTerms: "",
-       leadTime: 0,  
-      //leadTime: "",
-      tenantId: "",
+      gender: "",
+      dateOfBirth: "",
+      isActive: true,
+      loyaltyNumber: "",
+      segment: "",
+      tags: [],
+      defaultPaymentTerm: "",
     });
   };
 
   return (
     <div>
-      <div className="modal fade" id="supplier-modal">
+      <div className="modal fade" id="customer-modal">
         <div className="modal-dialog modal-dialog-centered custom-modal-two">
           <div className="modal-content">
             <div className="page-wrapper-new p-0">
@@ -71,10 +83,10 @@ const SupplierModal = () => {
 
                 <div className="modal-header border-0 custom-modal-header">
                   <div className="page-title">
-                    <h4>Add Supplier</h4>
+                    <h4>Add Customer</h4>
                   </div>
                   <button
-                    id="supplier-modal-close-btn"
+                    id="customer-modal-close-btn"
                     type="button"
                     className="close"
                     data-bs-dismiss="modal"
@@ -87,10 +99,22 @@ const SupplierModal = () => {
                   <form>
                     <div className="row">
 
-                      {/* Supplier Name */}
                       <div className="col-lg-4">
                         <div className="input-blocks">
-                          <label>Supplier Name</label>
+                          <label>Tenant ID</label>
+                          <input
+                            type="text"
+                            name="tenantId"
+                            className="form-control"
+                            value={form.tenantId}
+                            onChange={handleChange}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="col-lg-4">
+                        <div className="input-blocks">
+                          <label>Name</label>
                           <input
                             type="text"
                             name="name"
@@ -101,7 +125,6 @@ const SupplierModal = () => {
                         </div>
                       </div>
 
-                      {/* Email */}
                       <div className="col-lg-4">
                         <div className="input-blocks">
                           <label>Email</label>
@@ -115,7 +138,6 @@ const SupplierModal = () => {
                         </div>
                       </div>
 
-                      {/* Phone */}
                       <div className="col-lg-4">
                         <div className="input-blocks">
                           <label>Phone</label>
@@ -129,7 +151,6 @@ const SupplierModal = () => {
                         </div>
                       </div>
 
-                       {/* Address */}
                       <div className="col-lg-4">
                         <div className="input-blocks">
                           <label>Address</label>
@@ -143,63 +164,96 @@ const SupplierModal = () => {
                         </div>
                       </div>
 
-                       {/* Lead Time */}
                       <div className="col-lg-4">
                         <div className="input-blocks">
-                          <label>Notes</label>
+                          <label>Gender</label>
                           <input
                             type="text"
-                            name="notes"
+                            name="gender"
                             className="form-control"
-                            value={form.notes}
+                            value={form.gender}
                             onChange={handleChange}
                           />
                         </div>
                       </div>
 
-                                  {/* Lead Time */}
-                     <div className="col-lg-4">
-  <div className="input-blocks">
-    <label>Lead Time (days)</label>
-    <input
-      type="number"
-      name="leadTime"
-      className="form-control"
-      value={form.leadTime}
-      onChange={handleChange}
-      min={0}
-    />
-  </div>
-</div>
-
-
-                      {/* Payment Terms */}
-                      <div className="col-lg-6">
+                      <div className="col-lg-4">
                         <div className="input-blocks">
-                          <label>Payment Terms</label>
+                          <label>Date of Birth</label>
                           <input
-                            type="text"
-                            name="paymentTerms"
+                            type="date"
+                            name="dateOfBirth"
                             className="form-control"
-                            value={form.paymentTerms}
+                            value={form.dateOfBirth}
                             onChange={handleChange}
                           />
                         </div>
                       </div>
 
-                      {/* Tenant ID */}
-                      <div className="col-lg-6">
+                      <div className="col-lg-4">
                         <div className="input-blocks">
-                          <label>Tenant ID</label>
+                          <label>Loyalty Number</label>
                           <input
                             type="text"
-                            name="tenantId"
+                            name="loyaltyNumber"
                             className="form-control"
-                            value={form.tenantId}
+                            value={form.loyaltyNumber}
                             onChange={handleChange}
                           />
                         </div>
                       </div>
+
+                      <div className="col-lg-4">
+                        <div className="input-blocks">
+                          <label>Segment</label>
+                          <input
+                            type="text"
+                            name="segment"
+                            className="form-control"
+                            value={form.segment}
+                            onChange={handleChange}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="col-lg-4">
+                        <div className="input-blocks">
+                          <label>Tags (comma separated)</label>
+                          <input
+                            type="text"
+                            name="tags"
+                            className="form-control"
+                            value={form.tags.join(", ")}
+                            onChange={handleTagsChange}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="col-lg-4">
+                        <div className="input-blocks">
+                          <label>Default Payment Term</label>
+                          <input
+                            type="text"
+                            name="defaultPaymentTerm"
+                            className="form-control"
+                            value={form.defaultPaymentTerm}
+                            onChange={handleChange}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="col-lg-4">
+                        <div className="input-blocks">
+                          <label>Active</label>
+                          <input
+                            type="checkbox"
+                            name="isActive"
+                            checked={form.isActive}
+                            onChange={handleChange}
+                          />
+                        </div>
+                      </div>
+
                     </div>
 
                     <div className="modal-footer-btn">
@@ -215,7 +269,7 @@ const SupplierModal = () => {
                         className="btn btn-submit"
                         onClick={handleSubmit}
                       >
-                        Submit
+                        Add Customer
                       </button>
                     </div>
 
@@ -231,4 +285,4 @@ const SupplierModal = () => {
   );
 };
 
-export default SupplierModal;
+export default CustomerModal;

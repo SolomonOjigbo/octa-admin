@@ -1,69 +1,59 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createGlobalSupplier } from "../../../core/redux/slices/globalSupplier";
+import { createGlobalStore } from "../../../core/redux/slices/store";
 
-const SupplierModal = () => {
+const StoreModal = () => {
   const dispatch = useDispatch();
 
   const [form, setForm] = useState({
+    tenantId: "",
     name: "",
     email: "",
     phone: "",
-    paymentTerms: "",
     address: "",
-    notes: "",
-   leadTime: 0,
-    tenantId: "",   
+    isActive: true,
   });
 
-  const handleChange = (e: any) => {
-  const { name, value } = e.target;
+const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const { name, value, type } = e.target;
 
-  if (name === "leadTime") {
-    setForm({ ...form, leadTime: Number(value) });
+  if (type === "checkbox" && e.target instanceof HTMLInputElement) {
+    setForm({ ...form, [name]: e.target.checked });
   } else {
     setForm({ ...form, [name]: value });
   }
 };
 
 
-  const handleSubmit = () => {
-    document.getElementById("supplier-modal-close-btn")?.click();
 
-    // Payload must match your API DTO
+  const handleSubmit = () => {
+    document.getElementById("store-modal-close-btn")?.click();
+
     const payload = {
-      name: form.name,
-      email: form.email,
-      phone: form.phone,
-      paymentTerms: form.paymentTerms,
-      address: form.address,
-      notes: form.notes,
-      leadTime: Number(form.leadTime),
-      //leadTime: form.leadTime,
       tenantId: form.tenantId,
-      // ❗ NO IMAGE
-      // ❗ NO isActive (taken from supplier.tenant.isActive backend side)
+      name: form.name,
+      email: form.email || null,
+      phone: form.phone || null,
+      address: form.address || null,
+      isActive: form.isActive,
     };
 
-    dispatch<any>(createGlobalSupplier(payload));
+    dispatch<any>(createGlobalStore(payload));
 
-    // Reset
+    // Reset form
     setForm({
+      tenantId: "",
       name: "",
       email: "",
       phone: "",
       address: "",
-      notes: "",
-      paymentTerms: "",
-       leadTime: 0,  
-      //leadTime: "",
-      tenantId: "",
+      isActive: true,
     });
   };
 
   return (
     <div>
-      <div className="modal fade" id="supplier-modal">
+      <div className="modal fade" id="store-modal">
         <div className="modal-dialog modal-dialog-centered custom-modal-two">
           <div className="modal-content">
             <div className="page-wrapper-new p-0">
@@ -71,10 +61,10 @@ const SupplierModal = () => {
 
                 <div className="modal-header border-0 custom-modal-header">
                   <div className="page-title">
-                    <h4>Add Supplier</h4>
+                    <h4>Add Store</h4>
                   </div>
                   <button
-                    id="supplier-modal-close-btn"
+                    id="store-modal-close-btn"
                     type="button"
                     className="close"
                     data-bs-dismiss="modal"
@@ -87,10 +77,22 @@ const SupplierModal = () => {
                   <form>
                     <div className="row">
 
-                      {/* Supplier Name */}
                       <div className="col-lg-4">
                         <div className="input-blocks">
-                          <label>Supplier Name</label>
+                          <label>Tenant ID</label>
+                          <input
+                            type="text"
+                            name="tenantId"
+                            className="form-control"
+                            value={form.tenantId}
+                            onChange={handleChange}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="col-lg-4">
+                        <div className="input-blocks">
+                          <label>Name</label>
                           <input
                             type="text"
                             name="name"
@@ -101,7 +103,6 @@ const SupplierModal = () => {
                         </div>
                       </div>
 
-                      {/* Email */}
                       <div className="col-lg-4">
                         <div className="input-blocks">
                           <label>Email</label>
@@ -115,7 +116,6 @@ const SupplierModal = () => {
                         </div>
                       </div>
 
-                      {/* Phone */}
                       <div className="col-lg-4">
                         <div className="input-blocks">
                           <label>Phone</label>
@@ -129,7 +129,6 @@ const SupplierModal = () => {
                         </div>
                       </div>
 
-                       {/* Address */}
                       <div className="col-lg-4">
                         <div className="input-blocks">
                           <label>Address</label>
@@ -143,63 +142,18 @@ const SupplierModal = () => {
                         </div>
                       </div>
 
-                       {/* Lead Time */}
                       <div className="col-lg-4">
                         <div className="input-blocks">
-                          <label>Notes</label>
+                          <label>Active</label>
                           <input
-                            type="text"
-                            name="notes"
-                            className="form-control"
-                            value={form.notes}
+                            type="checkbox"
+                            name="isActive"
+                            checked={form.isActive}
                             onChange={handleChange}
                           />
                         </div>
                       </div>
 
-                                  {/* Lead Time */}
-                     <div className="col-lg-4">
-  <div className="input-blocks">
-    <label>Lead Time (days)</label>
-    <input
-      type="number"
-      name="leadTime"
-      className="form-control"
-      value={form.leadTime}
-      onChange={handleChange}
-      min={0}
-    />
-  </div>
-</div>
-
-
-                      {/* Payment Terms */}
-                      <div className="col-lg-6">
-                        <div className="input-blocks">
-                          <label>Payment Terms</label>
-                          <input
-                            type="text"
-                            name="paymentTerms"
-                            className="form-control"
-                            value={form.paymentTerms}
-                            onChange={handleChange}
-                          />
-                        </div>
-                      </div>
-
-                      {/* Tenant ID */}
-                      <div className="col-lg-6">
-                        <div className="input-blocks">
-                          <label>Tenant ID</label>
-                          <input
-                            type="text"
-                            name="tenantId"
-                            className="form-control"
-                            value={form.tenantId}
-                            onChange={handleChange}
-                          />
-                        </div>
-                      </div>
                     </div>
 
                     <div className="modal-footer-btn">
@@ -215,7 +169,7 @@ const SupplierModal = () => {
                         className="btn btn-submit"
                         onClick={handleSubmit}
                       >
-                        Submit
+                        Add Store
                       </button>
                     </div>
 
@@ -231,4 +185,4 @@ const SupplierModal = () => {
   );
 };
 
-export default SupplierModal;
+export default StoreModal;

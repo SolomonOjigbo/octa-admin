@@ -18,7 +18,7 @@ export interface Supplier {
   email?: string | null;
   phone?: string | null;
   address?: string | null;
-  leadTime?: string | null;
+  leadTime?: number | null;
   performanceMetrics?: string | null;
   paymentTerms?: string | null;
   linkedB2BPartnerId?: string | null;

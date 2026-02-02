@@ -38,6 +38,9 @@ const Suppliers = () => {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [selectedSupplierEdit, setSelectedSupplierEdit] = useState<any>(null);
 
+  // NEW: tenant dropdown selected value
+  const [tenantFilter, setTenantFilter] = useState<string | null>(null);
+
   useEffect(() => {
     dispatch(fetchGlobalSuppliers());
   }, [dispatch]);
@@ -52,11 +55,11 @@ const Suppliers = () => {
         email: supplier.email || "N/A",
         phone: supplier.phone || "N/A",
         paymentTerms: supplier.paymentTerms || "N/A",
+        tenantId: supplier.tenant?.id || "",
         tenant: supplier.tenant?.name || "N/A",
         createdAt: supplier.createdAt
           ? new Date(supplier.createdAt).toLocaleDateString()
           : "N/A",
-       // image: supplier.image || "",
       })) || [],
     [suppliers]
   );
@@ -65,13 +68,15 @@ const Suppliers = () => {
     setFilteredData(tableData);
   }, [tableData]);
 
-  // SEARCH
+  // APPLY SEARCH + TENANT FILTER
   useEffect(() => {
     applyFilterAndSearch();
-  }, [searchText, tableData]);
+  }, [searchText, tenantFilter, tableData]);
 
   const applyFilterAndSearch = () => {
     let data = [...tableData];
+
+    // Search by Name OR Email
     if (searchText) {
       const lower = searchText.toLowerCase();
       data = data.filter(
@@ -80,6 +85,13 @@ const Suppliers = () => {
           item.email.toLowerCase().includes(lower)
       );
     }
+
+    // Tenant Filter
+    if (tenantFilter && tenantFilter !== "ALL") {
+      data = data.filter((item) => item.tenantId === tenantFilter);
+    }
+
+
     setFilteredData(data);
   };
 
@@ -114,6 +126,15 @@ const Suppliers = () => {
       }
     });
   };
+
+  // Extract unique tenants
+  const uniqueTenants = Array.from(
+    new Map(
+      suppliers
+        .filter((s) => s.tenant)
+        .map((s) => [s.tenant?.id, s.tenant])
+    ).values()
+  );
 
   const columns = [
     {
@@ -169,13 +190,17 @@ const Suppliers = () => {
       render: (_: any, record: any) => (
         <td className="action-table-data">
           <div className="edit-delete-action">
-            {/* Open Edit Modal with selected supplier */}
             <Link
               className="me-2 p-2"
               to="#"
               data-bs-toggle="modal"
               data-bs-target="#edit-supplier"
-              onClick={() => setSelectedSupplierEdit(record)}
+              onClick={() => {
+                const fullSupplier = suppliers.find(
+                  (s) => s.id === record.supplierId
+                );
+                setSelectedSupplierEdit(fullSupplier);
+              }}
             >
               <Edit className="feather-edit" />
             </Link>
@@ -206,7 +231,7 @@ const Suppliers = () => {
   return (
     <div className="page-wrapper">
       <div className="content">
-        {/* Header */}
+        {/* HEADER */}
         <div className="page-header">
           <div className="add-item d-flex">
             <div className="page-title">
@@ -214,6 +239,7 @@ const Suppliers = () => {
               <h6>Manage your suppliers</h6>
             </div>
           </div>
+
           <ul className="table-top-head">
             <li>
               <OverlayTrigger placement="top" overlay={<Tooltip>Pdf</Tooltip>}>
@@ -225,7 +251,10 @@ const Suppliers = () => {
             <li>
               <OverlayTrigger placement="top" overlay={<Tooltip>Excel</Tooltip>}>
                 <Link to="#" onClick={() => exportSuppliersToExcel(exportData)}>
-                  <ImageWithBasePath src="assets/img/icons/excel.svg" alt="img" />
+                  <ImageWithBasePath
+                    src="assets/img/icons/excel.svg"
+                    alt="img"
+                  />
                 </Link>
               </OverlayTrigger>
             </li>
@@ -244,8 +273,8 @@ const Suppliers = () => {
               </OverlayTrigger>
             </li>
           </ul>
+
           <div className="page-btn">
-            {/* Add Supplier */}
             <Link
               to="#"
               className="btn btn-added me-2"
@@ -258,7 +287,7 @@ const Suppliers = () => {
           </div>
         </div>
 
-        {/* Search & filter */}
+        {/* SEARCH + FILTER */}
         <div className="table-top mb-3 d-flex align-items-center">
           <input
             type="text"
@@ -271,26 +300,46 @@ const Suppliers = () => {
           <Sliders className="ms-2" />
         </div>
 
-        {/* Optional filter card */}
+        {/* FILTER CARD */}
         {isFilterVisible && (
           <div className="card mb-3">
             <div className="card-body pb-0">
               <div className="row">
                 <div className="col-lg-3 col-sm-6 col-12">
+
+                  {/* TENANT FILTER DROPDOWN */}
                   <Select
-                    options={suppliers.map((s) => ({
-                      label: s.name,
-                      value: s.id,
-                    }))}
-                    placeholder="Choose Supplier"
+                    options={[
+                      { label: "All Tenants", value: "ALL" }, // 👈 NEW OPTION
+
+                      ...uniqueTenants.map((t) => ({
+                        label: t!.name,
+                        value: t!.id,
+                      })),
+                    ]}
+
+                    placeholder="Filter by Tenant"
+                    isClearable
+                    value={
+                      tenantFilter
+                        ? tenantFilter === "ALL"
+                          ? { label: "All Tenants", value: "ALL" }
+                          : uniqueTenants
+                            .map((t) => ({ label: t!.name, value: t!.id }))
+                            .find((opt) => opt.value === tenantFilter)
+                        : null
+                    }
+                    onChange={(e) => setTenantFilter(e ? e.value : null)}
                   />
+
+
                 </div>
               </div>
             </div>
           </div>
         )}
 
-        {/* Table */}
+        {/* TABLE */}
         <div className="table-responsive">
           <Table
             columns={columns}
@@ -301,10 +350,9 @@ const Suppliers = () => {
         </div>
       </div>
 
-      {/* Modals */}
-      <SupplierModal /> {/* Add Supplier */}
-    <SupplierEditModal selectedSupplierEdit={selectedSupplierEdit} />
-
+      {/* MODALS */}
+      <SupplierModal />
+      <SupplierEditModal selectedSupplierEdit={selectedSupplierEdit} />
     </div>
   );
 };

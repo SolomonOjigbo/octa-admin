@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { updateGlobalSupplier } from "../../core/redux/slices/globalSupplier";
-import { Supplier, SupplierTenant } from "../../core/redux/types/globalSupplier"; // Adjust path
+import { Supplier, SupplierTenant } from "../../core/redux/types/globalSupplier";
 
 interface Props {
   selectedSupplierEdit: Supplier | null;
@@ -19,35 +19,36 @@ const SupplierEditModal: React.FC<Props> = ({ selectedSupplierEdit }) => {
     phone: "",
     paymentTerms: "",
     address: "",
-    leadTime: "",
+    leadTime: 0,
     notes: "",
-    isActive: true,
   });
 
-  
-useEffect(() => {
-  if (selectedSupplierEdit) {
+
+  useEffect(() => {
+    if (!selectedSupplierEdit) return;
+
     setForm({
-      name: selectedSupplierEdit.name || "",
-      email: selectedSupplierEdit.email || "",
-      phone: selectedSupplierEdit.phone || "",
-      paymentTerms: selectedSupplierEdit.paymentTerms ?? "", // ensure default string
+      name: selectedSupplierEdit.name ?? "",
+      email: selectedSupplierEdit.email ?? "",
+      phone: selectedSupplierEdit.phone ?? "",
+      paymentTerms: selectedSupplierEdit.paymentTerms ?? "",
       address: selectedSupplierEdit.address ?? "",
-      leadTime: selectedSupplierEdit.leadTime ?? "",
+      leadTime: selectedSupplierEdit.leadTime ?? 0,
       notes: selectedSupplierEdit.notes ?? "",
-      isActive: selectedSupplierEdit.tenant?.isActive ?? true,
     });
-  }
-}, [selectedSupplierEdit]);
+  }, [selectedSupplierEdit]);
 
+  // Generic change handler
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target;
-    let val: any = type === "checkbox" ? (e.target as HTMLInputElement).checked : value;
-    if (name === "isActive") val = value === "true";
-    setForm({ ...form, [name]: val });
+     setForm({ ...form, [name]: value });
+
   };
 
+  // Handle form submit
   const handleSubmit = async () => {
     if (!selectedSupplierEdit) return;
 
@@ -61,16 +62,13 @@ useEffect(() => {
       address: form.address,
       leadTime: form.leadTime,
       notes: form.notes,
-      tenant: selectedSupplierEdit.tenant
-        ? { ...selectedSupplierEdit.tenant, isActive: form.isActive } as SupplierTenant
-        : { isActive: form.isActive, id: "", name: "", slug: "", type: "" } as SupplierTenant,
+
+ 
     };
 
     try {
-      // Await the dispatch if your thunk returns a promise
       await dispatch<any>(updateGlobalSupplier(selectedSupplierEdit.id, payload));
 
-      // Show success alert
       MySwal.fire("Updated!", "Supplier has been updated.", "success");
     } catch (error) {
       MySwal.fire("Error!", "Failed to update supplier.", "error");
@@ -84,11 +82,8 @@ useEffect(() => {
           <div className="modal-content">
             <div className="page-wrapper-new p-0">
               <div className="content">
-                {/* Modal Header */}
                 <div className="modal-header border-0 custom-modal-header">
-                  <div className="page-title">
-                    <h4>Edit Supplier</h4>
-                  </div>
+                  <div className="page-title"><h4>Edit Supplier</h4></div>
                   <button
                     id="edit-supplier-close-btn"
                     type="button"
@@ -99,66 +94,127 @@ useEffect(() => {
                   </button>
                 </div>
 
-                {/* Modal Body */}
                 <div className="modal-body custom-modal-body">
                   <form>
                     <div className="row">
+
+                      {/* Name */}
                       <div className="col-lg-4">
                         <div className="input-blocks">
                           <label>Supplier Name</label>
-                          <input type="text" name="name" className="form-control" value={form.name} onChange={handleChange} />
+                          <input
+                            type="text"
+                            name="name"
+                            className="form-control"
+                            value={form.name}
+                            onChange={handleChange}
+                          />
                         </div>
                       </div>
+
+                      {/* Email */}
                       <div className="col-lg-4">
                         <div className="input-blocks">
                           <label>Email</label>
-                          <input type="email" name="email" className="form-control" value={form.email} onChange={handleChange} />
+                          <input
+                            type="email"
+                            name="email"
+                            className="form-control"
+                            value={form.email}
+                            onChange={handleChange}
+                          />
                         </div>
                       </div>
+
+                      {/* Phone */}
                       <div className="col-lg-4">
                         <div className="input-blocks">
                           <label>Phone</label>
-                          <input type="text" name="phone" className="form-control" value={form.phone} onChange={handleChange} />
+                          <input
+                            type="text"
+                            name="phone"
+                            className="form-control"
+                            value={form.phone}
+                            onChange={handleChange}
+                          />
                         </div>
                       </div>
+
+                      {/* Payment Terms */}
                       <div className="col-lg-6">
                         <div className="input-blocks">
                           <label>Payment Terms</label>
-                          <input type="text" name="paymentTerms" className="form-control" value={form.paymentTerms} onChange={handleChange} />
+                          <input
+                            type="text"
+                            name="paymentTerms"
+                            className="form-control"
+                            value={form.paymentTerms}
+                            onChange={handleChange}
+                          />
                         </div>
                       </div>
+
+                      {/* Address */}
                       <div className="col-lg-6">
                         <div className="input-blocks">
                           <label>Address</label>
-                          <input type="text" name="address" className="form-control" value={form.address} onChange={handleChange} />
+                          <input
+                            type="text"
+                            name="address"
+                            className="form-control"
+                            value={form.address}
+                            onChange={handleChange}
+                          />
                         </div>
                       </div>
+
+                      {/* Lead Time */}
                       <div className="col-lg-6">
                         <div className="input-blocks">
                           <label>Lead Time</label>
-                          <input type="text" name="leadTime" className="form-control" value={form.leadTime} onChange={handleChange} />
+                          <input
+                            type="number"
+                            name="leadTime"
+                            className="form-control"
+                            value={form.leadTime}
+                            onChange={(e) =>
+                              setForm({ ...form, leadTime: Number(e.target.value) })
+                            }
+                          />
                         </div>
                       </div>
+
+                      {/* Notes */}
                       <div className="col-lg-6">
                         <div className="input-blocks">
                           <label>Notes</label>
-                          <input type="text" name="notes" className="form-control" value={form.notes} onChange={handleChange} />
+                          <input
+                            type="text"
+                            name="notes"
+                            className="form-control"
+                            value={form.notes}
+                            onChange={handleChange}
+                          />
                         </div>
                       </div>
-                      <div className="col-lg-6">
-                        <div className="input-blocks">
-                          <label>Active Status</label>
-                          <select name="isActive" className="form-control" value={form.isActive.toString()} onChange={handleChange}>
-                            <option value="true">Active</option>
-                            <option value="false">Inactive</option>
-                          </select>
-                        </div>
-                      </div>
+                     
                     </div>
 
                     <div className="modal-footer-btn">
-                      <button type="button" className="btn btn-cancel me-2" data-bs-dismiss="modal">Cancel</button>
-                      <button type="button" className="btn btn-submit" onClick={handleSubmit}>Save Changes</button>
+                      <button
+                        type="button"
+                        className="btn btn-cancel me-2"
+                        data-bs-dismiss="modal"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-submit"
+                        onClick={handleSubmit}
+                      >
+                        Save Changes
+                      </button>
                     </div>
                   </form>
                 </div>

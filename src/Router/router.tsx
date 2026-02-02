@@ -6,6 +6,7 @@ import { pagesRoute, posRoutes, publicRoutes } from "./router.link";
 import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ThemeSettings from "../InitialPage/themeSettings";
+import PrivateRoute from "./ProtectedRoute";
 // import CollapsedSidebar from "../InitialPage/Sidebar/collapsedSidebar";
 import Loader from "../feature-module/loader/loader";
 // import HorizontalSidebar from "../InitialPage/Sidebar/horizontalSidebar";
@@ -49,7 +50,7 @@ const AllRoutes = () => {
   );
 
   console.log(publicRoutes, "dashboard");
-
+  const PUBLIC_ONLY = ["/signin"];
   return (
     <div>
       <Routes>
@@ -58,11 +59,51 @@ const AllRoutes = () => {
             <Route path={route.path} element={route.element} key={id} />
           ))}
         </Route>
-        <Route path={"/"} element={<HeaderLayout />}>
+        {/* GOOD */}
+        {/* <Route path={"/"} element={<HeaderLayout />}>
           {publicRoutes.map((route, id) => (
             <Route path={route.path} element={route.element} key={id} />
           ))}
-        </Route>
+        </Route> */}
+        {/* GOOD */}
+      {/* <Route path="/" element={<HeaderLayout />}>
+          {publicRoutes.map((route, id) => {
+            const isPublic = PUBLIC_ONLY.includes(route.path);
+
+            return (
+              <Route
+                key={id}
+                path={route.path}
+                element={
+                  isPublic ? (
+                    route.element
+                  ) : (
+                    <PrivateRoute>
+                      {route.element}
+                    </PrivateRoute>
+                  )
+                }
+              />
+            );
+          })}
+        </Route> */}
+             <Route path="/" element={<HeaderLayout />}>
+        {publicRoutes.map((route, id) => {
+          const isPublic = PUBLIC_ONLY.includes(route.path);
+
+          return isPublic ? (
+            <Route key={id} path={route.path} element={route.element} />
+          ) : (
+            // Protected route wrapper
+            <Route key={id} element={<PrivateRoute />}>
+              <Route path={route.path} element={route.element} />
+            </Route>
+          );
+        })}
+      </Route>
+
+
+
 
         <Route path={"/"} element={<Authpages />}>
           {pagesRoute.map((route, id) => (
