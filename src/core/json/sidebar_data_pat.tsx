@@ -81,9 +81,10 @@ export const SidebarDataPat = [
     item("Category", "/category-list", "Codepen"),
     item("Sub Category", "/sub-categories", "Speaker"),
     item("Brands", "/brand-list", "Tag"),
-    item("Units", "/units", "Speaker"),
+    // item("Units", "/units", "Speaker"),
+    item("Variants", "/variants", "Layers"),
     item("Variant Attributes", "/variant-attributes", "Layers"),
-    item("Warranties", "/warranty", "Bookmark"),
+    // item("Warranties", "/warranty", "Bookmark"),
     item("Print Barcode", "/barcode", "AlignJustify"),
     item("Print QR Code", "/qrcode", "Maximize")
   ]),
@@ -102,9 +103,9 @@ export const SidebarDataPat = [
     item("POS", "/pos", "HardDrive"),
   ]),
 
-  section("Promo", [
-    item("Coupons", "/coupons", "ShoppingCart"),
-  ]),
+  // section("Promo", [
+  //   item("Coupons", "/coupons", "ShoppingCart"),
+  // ]),
 
   section("Purchases", [
     item("Purchases", "/purchase-list", "ShoppingBag"),
@@ -129,38 +130,38 @@ export const SidebarDataPat = [
     item("Warehouses", "/warehouse", "Archive"),
   ]),
 
-  section("HRM", [
-    item("Employees", "/employees-grid", "Users"),
-    item("Departments", "/department-grid", "User"),
-    item("Designations", "/designation", "UserCheck"),
-    item("Shifts", "/shift", "Shuffle"),
+  // section("HRM", [
+  //   item("Employees", "/employees-grid", "Users"),
+  //   item("Departments", "/department-grid", "User"),
+  //   item("Designations", "/designation", "UserCheck"),
+  //   item("Shifts", "/shift", "Shuffle"),
 
-    item("Attendance", "#", "Clock", {
-      submenu: true,
-      submenuItems: [
-        item("Employee", "/attendance-employee"),
-        item("Admin", "/attendance-admin"),
-      ]
-    }),
+  //   item("Attendance", "#", "Clock", {
+  //     submenu: true,
+  //     submenuItems: [
+  //       item("Employee", "/attendance-employee"),
+  //       item("Admin", "/attendance-admin"),
+  //     ]
+  //   }),
 
-    item("Leaves", "#", "Calendar", {
-      submenu: true,
-      submenuItems: [
-        item("Employee Leaves", "/leaves-employee"),
-        item("Admin Leaves", "/leaves-admin"),
-        item("Leave Types", "/leave-types"),
-      ]
-    }),
+  //   item("Leaves", "#", "Calendar", {
+  //     submenu: true,
+  //     submenuItems: [
+  //       item("Employee Leaves", "/leaves-employee"),
+  //       item("Admin Leaves", "/leaves-admin"),
+  //       item("Leave Types", "/leave-types"),
+  //     ]
+  //   }),
 
-    item("Holidays", "/holidays", "CreditCard"),
+  //   item("Holidays", "/holidays", "CreditCard"),
 
-    item("Payroll", "#", "DollarSign", {
-      submenu: true,
-      submenuItems: [
-        item("Payslip", "/payslip")
-      ]
-    })
-  ]),
+  //   item("Payroll", "#", "DollarSign", {
+  //     submenu: true,
+  //     submenuItems: [
+  //       item("Payslip", "/payslip")
+  //     ]
+  //   })
+  // ]),
 
   section("Reports", [
     item("Sales Report", "/sales-report", "BarChart2"),
@@ -184,60 +185,60 @@ export const SidebarDataPat = [
   section("Pages", [
     item("Profile", "/profile", "User"),
 
-    item("Authentication", null, "Shield", {
-      submenu: true,
-      submenuItems: [
-        item("Login", null, null, {
-          submenu: true,
-          submenuItems: [
-            item("Cover", "/signin"),
-            item("Illustration", "/signin-2"),
-            item("Basic", "/signin-3")
-          ]
-        }),
-        item("Register", null, null, {
-          submenu: true,
-          submenuItems: [
-            item("Cover", "/register"),
-            item("Illustration", "/register-2"),
-            item("Basic", "/register-3")
-          ]
-        }),
-        item("Forgot Password", null, null, {
-          submenu: true,
-          submenuItems: [
-            item("Cover", "/forgot-password"),
-            item("Illustration", "/forgot-password-2"),
-            item("Basic", "/forgot-password-3")
-          ]
-        }),
-        item("Reset Password", null, null, {
-          submenu: true,
-          submenuItems: [
-            item("Cover", "/reset-password"),
-            item("Illustration", "/reset-password-2"),
-            item("Basic", "/reset-password-3")
-          ]
-        }),
-        item("Email Verification", null, null, {
-          submenu: true,
-          submenuItems: [
-            item("Cover", "/email-verification"),
-            item("Illustration", "/email-verification-2"),
-            item("Basic", "/email-verification-3")
-          ]
-        }),
-        item("2 Step Verification", null, null, {
-          submenu: true,
-          submenuItems: [
-            item("Cover", "/two-step-verification"),
-            item("Illustration", "/two-step-verification-2"),
-            item("Basic", "/two-step-verification-3")
-          ]
-        }),
-        item("Lock Screen", "/lock-screen"),
-      ]
-    }),
+    // item("Authentication", null, "Shield", {
+    //   submenu: true,
+    //   submenuItems: [
+    //     item("Login", null, null, {
+    //       submenu: true,
+    //       submenuItems: [
+    //         item("Cover", "/signin"),
+    //         item("Illustration", "/signin-2"),
+    //         item("Basic", "/signin-3")
+    //       ]
+    //     }),
+    //     item("Register", null, null, {
+    //       submenu: true,
+    //       submenuItems: [
+    //         item("Cover", "/register"),
+    //         item("Illustration", "/register-2"),
+    //         item("Basic", "/register-3")
+    //       ]
+    //     }),
+    //     item("Forgot Password", null, null, {
+    //       submenu: true,
+    //       submenuItems: [
+    //         item("Cover", "/forgot-password"),
+    //         item("Illustration", "/forgot-password-2"),
+    //         item("Basic", "/forgot-password-3")
+    //       ]
+    //     }),
+    //     item("Reset Password", null, null, {
+    //       submenu: true,
+    //       submenuItems: [
+    //         item("Cover", "/reset-password"),
+    //         item("Illustration", "/reset-password-2"),
+    //         item("Basic", "/reset-password-3")
+    //       ]
+    //     }),
+    //     item("Email Verification", null, null, {
+    //       submenu: true,
+    //       submenuItems: [
+    //         item("Cover", "/email-verification"),
+    //         item("Illustration", "/email-verification-2"),
+    //         item("Basic", "/email-verification-3")
+    //       ]
+    //     }),
+    //     item("2 Step Verification", null, null, {
+    //       submenu: true,
+    //       submenuItems: [
+    //         item("Cover", "/two-step-verification"),
+    //         item("Illustration", "/two-step-verification-2"),
+    //         item("Basic", "/two-step-verification-3")
+    //       ]
+    //     }),
+    //     item("Lock Screen", "/lock-screen"),
+    //   ]
+    // }),
 
     item("Error Pages", null, "FileMinus", {
       submenu: true,
@@ -247,7 +248,7 @@ export const SidebarDataPat = [
       ]
     }),
 
-    item("Blank Page", "/blank-page", "File"),
+    // item("Blank Page", "/blank-page", "File"),
     item("Coming Soon", "/coming-soon", "Send"),
     item("Under Maintenance", "/under-maintenance", "AlertTriangle"),
   ]),
@@ -318,21 +319,21 @@ export const SidebarDataPat = [
     item("Logout", "/signin", "LogOut")
   ]),
 
-  section("UI Interface", [
-    item("Base UI", null, "Layers", {
-      submenu: true,
-      submenuItems: [
-        item("Alerts", "/ui-alerts"),
-        item("Accordion", "/ui-accordion"),
-        item("Avatar", "/ui-avatar"),
-        item("Badges", "/ui-badges"),
-        item("Border", "/ui-borders"),
-        item("Buttons", "/ui-buttons"),
-        item("Button Group", "/ui-buttons-group"),
-        item("Breadcrumb", "/ui-breadcrumb"),
-        item("Card", "/ui-cards"),
-      ]
-    }),
-  ])
+  // section("UI Interface", [
+  //   item("Base UI", null, "Layers", {
+  //     submenu: true,
+  //     submenuItems: [
+  //       item("Alerts", "/ui-alerts"),
+  //       item("Accordion", "/ui-accordion"),
+  //       item("Avatar", "/ui-avatar"),
+  //       item("Badges", "/ui-badges"),
+  //       item("Border", "/ui-borders"),
+  //       item("Buttons", "/ui-buttons"),
+  //       item("Button Group", "/ui-buttons-group"),
+  //       item("Breadcrumb", "/ui-breadcrumb"),
+  //       item("Card", "/ui-cards"),
+  //     ]
+  //   }),
+  // ])
 ];
 

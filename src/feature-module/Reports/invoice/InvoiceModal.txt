@@ -1,0 +1,141 @@
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../core/redux/store";
+import { addInvoice } from "../../../core/redux/slices/invoice";
+
+const InvoiceModal: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const [customer, setCustomer] = useState("");
+  const [invoiceNo, setInvoiceNo] = useState("");
+  const [dueDate, setDueDate] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [paid, setPaid] = useState(0);
+  const [status, setStatus] = useState("Unpaid");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const newInvoice = {
+      customer,
+      invoiceNo,
+      dueDate,
+      amount,
+      paid,
+      amountDue: amount - paid,
+      status,
+    };
+    dispatch(addInvoice(newInvoice));
+    // Close modal
+    const modalEl = document.getElementById("invoice-modal");
+    if (modalEl) (window as any).bootstrap.Modal.getInstance(modalEl)?.hide();
+    // Reset form
+    setCustomer("");
+    setInvoiceNo("");
+    setDueDate("");
+    setAmount(0);
+    setPaid(0);
+    setStatus("Unpaid");
+  };
+
+  return (
+    <div
+      className="modal fade"
+      id="invoice-modal"
+      tabIndex={-1}
+      aria-hidden="true"
+    >
+      <div className="modal-dialog modal-lg">
+        <form onSubmit={handleSubmit}>
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Add Invoice</h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+              />
+            </div>
+            <div className="modal-body">
+              <div className="mb-3">
+                <label>Invoice No</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={invoiceNo}
+                  onChange={(e) => setInvoiceNo(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label>Customer</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={customer}
+                  onChange={(e) => setCustomer(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label>Due Date</label>
+                <input
+                  type="date"
+                  className="form-control"
+                  value={dueDate}
+                  onChange={(e) => setDueDate(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label>Amount</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={amount}
+                  onChange={(e) => setAmount(Number(e.target.value))}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label>Paid</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={paid}
+                  onChange={(e) => setPaid(Number(e.target.value))}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label>Status</label>
+                <select
+                  className="form-select"
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                >
+                  <option value="Paid">Paid</option>
+                  <option value="Unpaid">Unpaid</option>
+                  <option value="Overdue">Overdue</option>
+                </select>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button type="submit" className="btn btn-primary">
+                Add Invoice
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default InvoiceModal;

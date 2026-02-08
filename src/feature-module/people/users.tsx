@@ -14,6 +14,8 @@ import { fetchGlobalUsers, deleteGlobalUser } from "../../core/redux/slices/user
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import ImageWithBasePath from "../../core/img/imagewithbasebath";
 import { exportUsersToExcel, exportUsersToPDF } from "../inventory/DataExport/exportUser";
+import UserViewModal from "./UserViewModal";
+import InviteUserModal from "./InviteUserModal";
 
 const Users = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -23,6 +25,8 @@ const Users = () => {
   const [searchText, setSearchText] = useState("");
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [selectedUserEdit, setSelectedUserEdit] = useState<any>(null);
+
+  const [selectedUserView, setSelectedUserView] = useState<any>(null);
 
   // Fetch users on mount
   useEffect(() => {
@@ -148,17 +152,24 @@ const Users = () => {
             >
               <Trash2 className="feather-trash-2" />
             </Link>
-            <Link className="me-2 p-2" to="#">
+            <Link
+              className="me-2 p-2"
+              to="#"
+              data-bs-toggle="modal"
+              data-bs-target="#user-view-modal"
+              onClick={() => user && setSelectedUserView(user)}
+            >
               <Eye className="feather-view" />
             </Link>
+
           </div>
         );
       },
     },
   ];
 
-    const exportData = users.map((user) => ({
-      userId: user.id,
+  const exportData = users.map((user) => ({
+    userId: user.id,
     name: user.name,
     email: user.email || "N/A",
     phone: user.phone || "N/A",
@@ -172,10 +183,10 @@ const Users = () => {
     <div className="page-wrapper">
       <div className="content">
         {/* HEADER */}
-          <div className="page-header">
+        <div className="page-header">
           <div className="add-item d-flex">
             <div className="page-title">
-              <h4>User</h4>
+              <h4>Users</h4>
               <h6>Manage your users</h6>
             </div>
           </div>
@@ -224,6 +235,16 @@ const Users = () => {
               <PlusCircle className="me-2" />
               Add New User
             </Link>
+            <Link
+  to="#"
+  className="btn btn-added"
+  data-bs-toggle="modal"
+  data-bs-target="#invite-user-modal"
+>
+  <User className="me-2" />
+  Invite User
+</Link>
+
           </div>
         </div>
         {/* <div className="page-header d-flex justify-content-between align-items-center mb-3">
@@ -271,12 +292,12 @@ const Users = () => {
                       placeholder="Filter by User Name"
                       isClearable
                       value={null}
-                      onChange={() => {}}
+                      onChange={() => { }}
                     />
                   </div>
                 </div>
                 <div className="col-lg-3 col-sm-6 col-12">
-              
+
                 </div>
               </div>
             </div>
@@ -297,7 +318,9 @@ const Users = () => {
       {/* MODALS */}
       <UserModal />
       <UserEditModal selectedUserEdit={selectedUserEdit} />
-   
+<UserViewModal user={selectedUserView} />
+<InviteUserModal />
+
     </div>
   );
 };

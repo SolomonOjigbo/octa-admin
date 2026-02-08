@@ -100,3 +100,71 @@ export const globalProductApi = {
     return await response.json();
   },
 };
+
+
+
+  // --------------------------------
+  // CSV IMPORT PRODUCT
+  // --------------------------------
+// globalProduct.api.ts
+export const globalProductImportApi = {
+  importCsvold: async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch(
+      `${BASE_URL}/admin/global-product/import-csv`, // ✅ FIXED
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: formData,
+      }
+    );
+
+    const text = await res.text(); // 👈 SAFE PARSE
+
+    let json: any;
+    try {
+      json = JSON.parse(text);
+    } catch {
+      throw new Error("Server returned non-JSON response");
+    }
+
+    if (!res.ok) {
+      throw new Error(json.message || "CSV import failed");
+    }
+
+    return json.data;
+  },
+  importCsv: async (
+  file: File,
+  globalCategoryId: string,
+  brandId?: string
+) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("globalCategoryId", globalCategoryId);
+  if (brandId) formData.append("brandId", brandId);
+
+  const res = await fetch(
+    `${BASE_URL}/admin/global-product/import-csv`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+      body: formData,
+    }
+  );
+
+  const text = await res.text();
+  const json = JSON.parse(text);
+
+  if (!res.ok) throw new Error(json.message);
+  return json.data;
+}
+
+};
+

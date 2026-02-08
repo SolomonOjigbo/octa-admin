@@ -1,8 +1,10 @@
 import React from "react";
 import { Route, Navigate } from "react-router-dom";
-import ProductList from "../feature-module/inventory/productlist"; 
 import Dashboard from "../feature-module/dashboard/Dashboard";
-import AddProduct from "../feature-module/inventory/addproduct";
+
+import ProductList from "../feature-module/inventory/products/productlist"; 
+import AddProduct from "../feature-module/inventory/products/addproduct";
+
 import SalesDashbaord from "../feature-module/dashboard/salesdashbaord";
 import BrandList from "../feature-module/inventory/brandlist";
 import VariantAttributes from "../feature-module/inventory/variantattributes";
@@ -92,7 +94,7 @@ import ExpiredProduct from "../feature-module/inventory/expiredproduct";
 import LowStock from "../feature-module/inventory/lowstock";
 import CategoryList from "../feature-module/inventory/categorylist";
 import SubCategories from "../feature-module/inventory/subcategories";
-import EditProduct from "../feature-module/inventory/editproduct";
+import EditProduct from "../feature-module/inventory/products/editproduct";
 import Videocall from "../feature-module/Application/videocall";
 import Audiocall from "../feature-module/Application/audiocall";
 import Email from "../feature-module/Application/email";
@@ -116,6 +118,7 @@ import GdprSettings from "../feature-module/settings/systemsettings/gdprsettings
 import PaymentGateway from "../feature-module/settings/financialsettings/paymentgateway";
 import BankSetting from "../feature-module/settings/financialsettings/banksetting";
 import Customers from "../feature-module/people/customers";
+import Variants from "../feature-module/inventory/variants/variant";
 import Suppliers from "../feature-module/people/suppliers";
 import StoreList from "../core/modals/peoples/storelist";
 import Managestock from "../feature-module/stock/managestock";
@@ -124,7 +127,8 @@ import StockTransfer from "../feature-module/stock/stockTransfer";
 import SalesReport from "../feature-module/Reports/salesreport";
 import PurchaseReport from "../feature-module/Reports/purchasereport";
 import InventoryReport from "../feature-module/Reports/inventoryreport";
-import Invoicereport from "../feature-module/Reports/invoicereport";
+//import Invoicereport from "../feature-module/Reports/invoicereport";
+import Invoicereport from "../feature-module/Reports/invoice/invoicereport";
 import SupplierReport from "../feature-module/Reports/supplierreport";
 import CustomerReport from "../feature-module/Reports/customerreport";
 import ExpenseReport from "../feature-module/Reports/expensereport";
@@ -187,7 +191,7 @@ import AddEmployee from "../feature-module/hrm/addemployee";
 import LeavesAdmin from "../feature-module/hrm/leavesadmin";
 import LeavesEmployee from "../feature-module/hrm/leavesemployee";
 import LeaveTypes from "../feature-module/hrm/leavetypes";
-import ProductDetail from "../feature-module/inventory/productdetail";
+import ProductDetail from "../feature-module/inventory/products/productdetail";
 import { Units } from "../feature-module/inventory/units";
 import TaxRates from "../feature-module/settings/financialsettings/taxrates";
 import CurrencySettings from "../feature-module/settings/financialsettings/currencysettings";
@@ -1391,6 +1395,13 @@ export const publicRoutes = [
     path: "*",
     name: "NotFound",
     element: <Navigate to="/" />,
+    route: Route,
+  },
+    {
+    id: 117,
+    path: routes.variants,
+    name: "variants",
+    element: <Variants />,
     route: Route,
   },
 ];
