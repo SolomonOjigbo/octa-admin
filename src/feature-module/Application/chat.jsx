@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Scrollbars from "react-custom-scrollbars-2";
-import "boxicons/css/boxicons.css";
+// import "boxicons/css/boxicons.css";
 import "boxicons/css/boxicons.min.css";
 import { Link } from "react-router-dom";
 import ImageWithBasePath from "../../core/img/imagewithbasebath";
