@@ -8,6 +8,19 @@ import CollapsedSidebar from "./collapsedSidebar";
 // =========================
 // Helpers
 // =========================
+
+const isPathActive = (path: string, location: any) =>
+  location.pathname === path;
+
+const isAnyChildActive = (items: any[] = [], location: any) =>
+  items.some(
+    (i) =>
+      i.link === location.pathname ||
+      i.submenuItems?.some((s: any) => s.link === location.pathname)
+  );
+
+
+
 const collectLinks = (submenuItems: any[]): string[] => {
   const links: string[] = [];
 
@@ -43,23 +56,72 @@ const SubMenuLevel3 = ({ items, location }: any) => {
   );
 };
 
+
+// const SubMenuLevel3 = ({ items, location }: any) => (
+//   <ul className="submenu-level-3">
+//     {items.map((subItem: any, index: number) => {
+//       const isActive = isPathActive(subItem.link, location);
+
+//       return (
+//         <li key={index} className={isActive ? "active" : ""}>
+//           <Link to={subItem.link}>{subItem.label}</Link>
+//         </li>
+//       );
+//     })}
+//   </ul>
+// );
+
+
 // =========================
 // Submenu Level 2
 // =========================
+
+
+// const SubMenuLevel2 = ({
+//   item,
+//   subsidebar,
+//   toggleSubsidebar,
+//   location,
+// }: any) => {
+//   const hasSubmenu = item.submenuItems && item.submenuItems.length > 0;
+
+//   const isActive =
+//     item.link === location.pathname ||
+//     item.submenuItems?.some((i: any) => i.link === location.pathname);
+
+//   return (
+//     <li className="submenu submenu-two">
+//       <Link
+//         to={item.link}
+//         onClick={() => toggleSubsidebar(item.label)}
+//         className={isActive ? "active" : ""}
+//       >
+//         {item.label}
+//         {hasSubmenu && <span className="menu-arrow" />}
+//       </Link>
+
+//       {hasSubmenu && subsidebar === item.label && (
+//         <SubMenuLevel3 items={item.submenuItems} location={location} />
+//       )}
+//     </li>
+//   );
+// };
+
 const SubMenuLevel2 = ({
   item,
   subsidebar,
   toggleSubsidebar,
   location,
 }: any) => {
-  const hasSubmenu = item.submenuItems && item.submenuItems.length > 0;
-
+  const hasSubmenu = item.submenuItems?.length > 0;
   const isActive =
-    item.link === location.pathname ||
-    item.submenuItems?.some((i: any) => i.link === location.pathname);
+    isPathActive(item.link, location) ||
+    isAnyChildActive(item.submenuItems, location);
+
+  const isOpen = subsidebar === item.label || isActive;
 
   return (
-    <li className="submenu submenu-two">
+    <li className={`submenu submenu-two ${isActive ? "active" : ""}`}>
       <Link
         to={item.link}
         onClick={() => toggleSubsidebar(item.label)}
@@ -69,16 +131,61 @@ const SubMenuLevel2 = ({
         {hasSubmenu && <span className="menu-arrow" />}
       </Link>
 
-      {hasSubmenu && subsidebar === item.label && (
+      {hasSubmenu && isOpen && (
         <SubMenuLevel3 items={item.submenuItems} location={location} />
       )}
     </li>
   );
 };
 
+
 // =========================
 // Submenu Level 1
 // =========================
+
+
+// const SubMenuLevel1 = ({
+//   title,
+//   subOpen,
+//   toggleSidebar,
+//   subsidebar,
+//   toggleSubsidebar,
+//   location,
+// }: any) => {
+//   const links = collectLinks(title.submenuItems ?? []);
+//   const isActive = links.includes(location.pathname);
+
+//   return (
+//     <li className="submenu">
+//       <Link
+//         to={title.link}
+//         onClick={() => toggleSidebar(title.label)}
+//         className={`${subOpen === title.label ? "subdrop" : ""} ${
+//           isActive ? "active" : ""
+//         }`}
+//       >
+//         {title.icon}
+//         <span>{title.label}</span>
+//         {title.submenu && <span className="menu-arrow" />}
+//       </Link>
+
+//       {subOpen === title.label && (
+//         <ul>
+//           {title.submenuItems?.map((item: any, idx: number) => (
+//             <SubMenuLevel2
+//               key={idx}
+//               item={item}
+//               subsidebar={subsidebar}
+//               toggleSubsidebar={toggleSubsidebar}
+//               location={location}
+//             />
+//           ))}
+//         </ul>
+//       )}
+//     </li>
+//   );
+// };
+
 const SubMenuLevel1 = ({
   title,
   subOpen,
@@ -87,15 +194,18 @@ const SubMenuLevel1 = ({
   toggleSubsidebar,
   location,
 }: any) => {
-  const links = collectLinks(title.submenuItems ?? []);
-  const isActive = links.includes(location.pathname);
+  const isActive =
+    isPathActive(title.link, location) ||
+    isAnyChildActive(title.submenuItems, location);
+
+  const isOpen = subOpen === title.label || isActive;
 
   return (
-    <li className="submenu">
+    <li className={`submenu ${isActive ? "active" : ""}`}>
       <Link
         to={title.link}
         onClick={() => toggleSidebar(title.label)}
-        className={`${subOpen === title.label ? "subdrop" : ""} ${
+        className={`${isOpen ? "subdrop" : ""} ${
           isActive ? "active" : ""
         }`}
       >
@@ -104,7 +214,7 @@ const SubMenuLevel1 = ({
         {title.submenu && <span className="menu-arrow" />}
       </Link>
 
-      {subOpen === title.label && (
+      {isOpen && (
         <ul>
           {title.submenuItems?.map((item: any, idx: number) => (
             <SubMenuLevel2
@@ -120,6 +230,7 @@ const SubMenuLevel1 = ({
     </li>
   );
 };
+
 
 // =========================
 // Main Sidebar
@@ -169,8 +280,8 @@ const Sidebar = () => {
         </Scrollbars>
       </div>
 
-      <HorizontalSidebar />
-      <CollapsedSidebar />
+      {/* <HorizontalSidebar />
+      <CollapsedSidebar /> */}
     </div>
   );
 };

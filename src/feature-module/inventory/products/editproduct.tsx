@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Select from "react-select";
-import { all_routes } from "../../Router/all_routes";
+import { all_routes } from "../../../Router/all_routes";
 import { DatePicker } from "antd";
-import Addunits from "../../core/modals/inventory/addunits";
-import AddCategory from "../../core/modals/inventory/addcategory";
-import AddBrand from "../../core/modals/addbrand";
+import Addunits from "../../../core/modals/inventory/addunits";
+import AddCategory from "../../../core/modals/inventory/addcategory";
+import AddBrand from "../../../core/modals/addbrand";
 import {
   ArrowLeft,
   Calendar,
@@ -23,13 +23,13 @@ import {
   fetchGlobalProductById,
   updateGlobalProduct,
   updateSuccess,
-} from "../../core/redux/slices/globalProduct";
+} from "../../../core/redux/slices/globalProduct";
 import { GlobalProduct, Variant } from "@/core/redux/types/globalProduct";
 import { useDispatch, useSelector } from "react-redux";
-import { useAppDispatch, useAppSelector } from "../../core/redux/store";
-import { setToogleHeader } from "../../core/redux/action";
+import { useAppDispatch, useAppSelector } from "../../../core/redux/store";
+import { setToogleHeader } from "../../../core/redux/action";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import ImageWithBasePath from "../../core/img/imagewithbasebath";
+import ImageWithBasePath from "../../../core/img/imagewithbasebath";
 
 const EditProduct = () => {
   const route = all_routes;

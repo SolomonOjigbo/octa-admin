@@ -19,15 +19,16 @@ import {
 } from "feather-icons-react/build/IconComponents";
 import { Download } from "react-feather";
 
-import { useAppDispatch, useAppSelector } from "../../core/redux/store";
-import { fetchGlobalProducts } from "../../core/redux/slices/globalProduct";
-import Table from "../../core/pagination/datatable";
-import ImageWithBasePath from "../../core/img/imagewithbasebath";
-import { setToogleHeader } from "../../core/redux/action";
-import { all_routes } from "../../Router/all_routes";
-import Brand from "../../core/modals/inventory/brand";
-import small from "../../assets/images/logo-small.png";
-import { exportProductsToExcel, exportProductsToPDF } from "./DataExport/exportProduct";
+import { useAppDispatch, useAppSelector } from "../../../core/redux/store";
+import { fetchGlobalProducts } from "../../../core/redux/slices/globalProduct";
+import Table from "../../../core/pagination/datatable";
+import ImageWithBasePath from "../../../core/img/imagewithbasebath";
+import { setToogleHeader } from "../../../core/redux/action";
+import { all_routes } from "../../../Router/all_routes";
+//import Brand from "../../core/modals/inventory/brand";
+import Brand from "../../../feature-module/inventory/products/importProduct"
+import small from "../../../assets/images/logo-small.png";
+import { exportProductsToExcel, exportProductsToPDF } from "../DataExport/exportProduct";
 interface Product {
   id: string;
   product: string;
@@ -123,24 +124,34 @@ const ProductList: React.FC = () => {
   title: "Product",
   dataIndex: "product",
   render: (text: string, record: Product) => {
-    const imgSrc = record.img ? record.img : small;
+
+    const imgSrc =
+      record.img && record.img.trim() !== ""
+        ? record.img.startsWith("http")
+          ? record.img                     // full URL from API
+          : record.img                     // relative path (ImageWithBasePath handles it)
+        : small;                           // fallback image
 
     return (
       <span className="productimgname">
-        <Link to={`/product-details/${record.id}`} className="product-img stock-img">
+        <Link
+          to={`/product-details/${record.id}`}
+          className="product-img stock-img"
+        >
           <ImageWithBasePath
+            src={imgSrc}
             alt={text}
-            src={imgSrc} // use dynamic image or fallback
             width={40}
             height={40}
+            className="rounded"
           />
         </Link>
         <Link to={`/product-details/${record.id}`}>{text}</Link>
       </span>
     );
   },
-  sorter: (a: Product, b: Product) => a.product.length - b.product.length,
 }
+
 ,
 
     { title: "SKU", dataIndex: "sku", sorter: (a: Product, b: Product) => a.sku.length - b.sku.length },

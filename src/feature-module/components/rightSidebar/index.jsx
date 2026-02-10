@@ -75,7 +75,7 @@ const RightSideBar = () => {
 
           <li className="sidebar-icons">
             <Link
-              to="https://themeforest.net/item/dreamspos-pos-inventory-management-admin-dashboard-template/38834413"
+              to="https://themeforest.net/item/Teaspoon-pos-inventory-management-admin-dashboard-template/38834413"
               target="_blank"
               data-bs-toggle="tooltip"
               data-bs-placement="left"
@@ -172,7 +172,7 @@ const RightSideBar = () => {
                       <input type="checkbox" id={1} className="check" />
                       <label htmlFor={1} className="checktoggle">
                         <Link
-                          to="https://dreamspos.dreamguystech.com/react/template-rtl/dashboard"
+                          to="https://Teaspoon.dreamguystech.com/react/template-rtl/dashboard"
                           className="layout-link"
                         >
                           checkbox

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Select from "react-select";
-import { all_routes } from "../../Router/all_routes";
+import { all_routes } from "../../../Router/all_routes";
 import { DatePicker } from "antd";
-import Addunits from "../../core/modals/inventory/addunits";
-import AddCategory from "../../core/modals/inventory/addcategory";
-import AddBrand from "../../core/modals/addbrand";
+import Addunits from "../../../core/modals/inventory/addunits";
+import AddCategory from "../../../core/modals/inventory/addcategory";
+import AddBrand from "../../../core/modals/addbrand";
 import {
   ArrowLeft,
   Calendar,
@@ -19,9 +19,9 @@ import {
   X,
 } from "feather-icons-react/build/IconComponents";
 import { useDispatch, useSelector } from "react-redux";
-import { setToogleHeader } from "../../core/redux/action";
+import { setToogleHeader } from "../../../core/redux/action";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import ImageWithBasePath from "../../core/img/imagewithbasebath";
+import ImageWithBasePath from "../../../core/img/imagewithbasebath";
 
 const AddProduct = () => {
   const route = all_routes;

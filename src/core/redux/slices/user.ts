@@ -64,6 +64,17 @@ const userSlice = createSlice({
       state.loading = false;
     },
 
+      upsertUser: (state, action: PayloadAction<User>) => {
+      const index = state.users.findIndex(u => u.id === action.payload.id);
+      if (index >= 0) {
+        state.users[index] = action.payload;
+      } else {
+        state.users.push(action.payload);
+      }
+      state.users = sortByName(state.users);
+      state.loading = false;
+    },
+
     deleteSuccess(state, action: PayloadAction<string>) {
       const id = action.payload;
 
@@ -85,6 +96,7 @@ export const {
   createSuccess,
   updateSuccess,
   deleteSuccess,
+  upsertUser
 } = userSlice.actions;
 
 export default userSlice.reducer;
@@ -103,6 +115,18 @@ export const fetchGlobalUsers = () => async (dispatch: AppDispatch) => {
     dispatch(requestFail(e.message));
   }
 };
+
+// FETCH BY TENANT
+export const fetchUsersByTenant =
+  (tenantId: string) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(requestStart());
+      const res = await globalUserApi.getByTenant(tenantId);
+      dispatch(getAllSuccess(res.users));
+    } catch (e: any) {
+      dispatch(requestFail(e.message));
+    }
+  };
 
 // FETCH ONE
 export const fetchGlobalUserById =
@@ -135,6 +159,41 @@ export const updateGlobalUser =
       dispatch(requestStart());
       const updated = await globalUserApi.update(id, dto);
       dispatch(updateSuccess(updated));
+    } catch (e: any) {
+      dispatch(requestFail(e.message));
+    }
+  };
+
+  // ACTIVATE / DEACTIVATE
+export const deactivateUser =
+  (id: string) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(requestStart());
+      const user = await globalUserApi.deactivate(id);
+      dispatch(upsertUser(user));
+    } catch (e: any) {
+      dispatch(requestFail(e.message));
+    }
+  };
+
+export const reactivateUser =
+  (id: string) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(requestStart());
+      const user = await globalUserApi.reactivate(id);
+      dispatch(upsertUser(user));
+    } catch (e: any) {
+      dispatch(requestFail(e.message));
+    }
+  };
+
+  // INVITE
+export const inviteUser =
+  (dto: any) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(requestStart());
+      const user = await globalUserApi.invite(dto);
+      dispatch(upsertUser(user));
     } catch (e: any) {
       dispatch(requestFail(e.message));
     }

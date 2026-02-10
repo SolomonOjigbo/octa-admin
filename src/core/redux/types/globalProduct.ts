@@ -83,3 +83,26 @@ export interface CreateGlobalProductDto {
 }
 
 export interface UpdateGlobalProductDto extends CreateGlobalProductDto {}
+
+
+export interface GlobalProductImportResult {
+  successCount: number;
+  failedCount: number;
+  errors: {
+    row: number;
+    message: string;
+  }[];
+}
+
+
+export interface ImportError {
+  row: number;
+  message: string;
+}
+
+export interface ImportResult {
+  successCount: number;
+  failedCount: number;
+  errors: ImportError[];
+}
+

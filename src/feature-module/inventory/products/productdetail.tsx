@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../core/redux/store";
-import { fetchGlobalProductById } from "../../core/redux/slices/globalProduct";
-import ImageWithBasePath from "../../core/img/imagewithbasebath";
+import { useAppDispatch, useAppSelector } from "../../../core/redux/store";
+import { fetchGlobalProductById } from "../../../core/redux/slices/globalProduct";
+import ImageWithBasePath from "../../../core/img/imagewithbasebath";
 import { Descriptions } from "antd";
 import { ArrowLeft } from "react-feather";
-import { all_routes } from "../../Router/all_routes";
+import { all_routes } from "../../../Router/all_routes";
 
 const ProductDetail: React.FC = () => {
     const route = all_routes;
