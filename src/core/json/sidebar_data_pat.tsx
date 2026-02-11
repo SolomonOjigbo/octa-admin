@@ -52,25 +52,25 @@ export const SidebarDataPat = [
       ]
     }),
 
-    item("Application", "/", "Smartphone", {
-      submenu: true,
-      submenuItems: [
-        item("Chat", "/chat"),
-        item("Call", null, null, {
-          submenu: true,
-          submenuItems: [
-            item("Video Call", "/video-call"),
-            item("Audio Call", "/audio-call"),
-            item("Call History", "/call-history")
-          ]
-        }),
-        item("Calendar", "/calendar"),
-        item("Email", "/email"),
-        item("To Do", "/todo"),
-        item("Notes", "/notes"),
-        item("File Manager", "/file-manager"),
-      ]
-    })
+    // item("Application", "/", "Smartphone", {
+    //   submenu: true,
+    //   submenuItems: [
+    //     item("Chat", "/chat"),
+    //     item("Call", null, null, {
+    //       submenu: true,
+    //       submenuItems: [
+    //         item("Video Call", "/video-call"),
+    //         item("Audio Call", "/audio-call"),
+    //         item("Call History", "/call-history")
+    //       ]
+    //     }),
+    //     item("Calendar", "/calendar"),
+    //     item("Email", "/email"),
+    //     item("To Do", "/todo"),
+    //     item("Notes", "/notes"),
+    //     item("File Manager", "/file-manager"),
+    //   ]
+    // })
   ]),
 
   section("Inventory", [

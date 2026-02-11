@@ -85,7 +85,7 @@ import FloatingLabel from "../feature-module/uiinterface/forms/formelements/layo
 import FormValidation from "../feature-module/uiinterface/forms/formelements/layouts/form-validation";
 import FormSelect2 from "../feature-module/uiinterface/forms/formelements/layouts/form-select2";
 import Ribbon from "../feature-module/uiinterface/advancedui/ribbon";
-import Chats from "../feature-module/Application/chat";
+// import Chats from "../feature-module/Application/chat";
 import ExpensesList from "../feature-module/FinanceAccounts/expenseslist";
 import ExpenseCategory from "../feature-module/FinanceAccounts/expensecategory";
 import Calendar from "../feature-module/Application/calendar";
@@ -95,7 +95,7 @@ import LowStock from "../feature-module/inventory/lowstock";
 import CategoryList from "../feature-module/inventory/categorylist";
 import SubCategories from "../feature-module/inventory/subcategories";
 import EditProduct from "../feature-module/inventory/products/editproduct";
-import Videocall from "../feature-module/Application/videocall";
+// import Videocall from "../feature-module/Application/videocall";
 import Audiocall from "../feature-module/Application/audiocall";
 import Email from "../feature-module/Application/email";
 import Callhistory from "../feature-module/Application/callhistory";
@@ -703,13 +703,13 @@ export const publicRoutes = [
     element: <Ribbon />,
     route: Route,
   },
-  {
-    id: 60,
-    path: routes.chat,
-    name: "chat",
-    element: <Chats />,
-    route: Route,
-  },
+  // {
+  //   id: 60,
+  //   path: routes.chat,
+  //   name: "chat",
+  //   element: <Chats />,
+  //   route: Route,
+  // },
   {
     id: 49,
     path: routes.gridgutters,
@@ -844,13 +844,13 @@ export const publicRoutes = [
     element: <EditProduct />,
     route: Route,
   },
-  {
-    id: 63,
-    path: routes.videocall,
-    name: "videocall",
-    element: <Videocall />,
-    route: Route,
-  },
+  // {
+  //   id: 63,
+  //   path: routes.videocall,
+  //   name: "videocall",
+  //   element: <Videocall />,
+  //   route: Route,
+  // },
   {
     id: 64,
     path: routes.audiocall,
