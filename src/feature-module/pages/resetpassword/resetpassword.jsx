@@ -2,6 +2,7 @@ import React from "react";
 import ImageWithBasePath from "../../../core/img/imagewithbasebath";
 import { Link } from "react-router-dom";
 import { all_routes } from "../../../Router/all_routes";
+import { logo } from "../../../assets/images";
 
 const Resetpassword = () => {
   const route = all_routes;
@@ -13,7 +14,8 @@ const Resetpassword = () => {
             <form action="success-3">
               <div className="login-userset">
                 <div className="login-logo logo-normal">
-                  <ImageWithBasePath src="assets/img/logo.png" alt="img" />
+                  {/* <ImageWithBasePath src="assets/img/logo.png" alt="img" /> */}
+                  <ImageWithBasePath src={logo} alt="img" />
                 </div>
                 <Link to={route.dashboard} className="login-logo logo-white">
                   <ImageWithBasePath src="assets/img/logo-white.png" alt />

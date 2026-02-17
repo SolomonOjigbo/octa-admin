@@ -4,21 +4,12 @@ import { Route, Navigate } from "react-router-dom";
 
 //NEW SETUP ROUTE
 import Signin from "../pages/login/signin";
-import Forgotpassword from "../pages/forgotpassword/forgotpassword";
-import Register from "../pages/register/register";
-import Customers from "../pages/dashboard/customers/customers";
+
+
+
 //*********************************************************
 
-//OTHER ROUTES 
-import SigninTwo from "../feature-module/pages/login/signinTwo";
-import SigninThree from "../feature-module/pages/login/signinThree";
-import RegisterTwo from "../feature-module/pages/register/registerTwo";
-import RegisterThree from "../feature-module/pages/register/registerThree";
-import ForgotpasswordTwo from "../feature-module/pages/forgotpassword/forgotpasswordTwo";
-import ForgotpasswordThree from "../feature-module/pages/forgotpassword/forgotpasswordThree";
 
-
-// END OTHER ROUTES
 import Dashboard from "../feature-module/dashboard/Dashboard";
 
 import ProductList from "../feature-module/inventory/products/productlist"; 
@@ -136,7 +127,7 @@ import OtpSettings from "../feature-module/settings/systemsettings/otpsettings";
 import GdprSettings from "../feature-module/settings/systemsettings/gdprsettings";
 import PaymentGateway from "../feature-module/settings/financialsettings/paymentgateway";
 import BankSetting from "../feature-module/settings/financialsettings/banksetting";
-//import Customers from "../feature-module/people/customers";
+import Customers from "../feature-module/people/customers";
 import Variants from "../feature-module/inventory/variants/variant";
 import Suppliers from "../feature-module/people/suppliers";
 import StoreList from "../core/modals/peoples/storelist";
@@ -176,7 +167,15 @@ import QuotationList from "../feature-module/sales/quotationlist";
 import Notes from "../feature-module/Application/notes";
 import FileManager from "../feature-module/Application/filemanager";
 import Profile from "../feature-module/pages/profile";
-
+//import Signin from "../feature-module/pages/login/signin";
+import SigninTwo from "../feature-module/pages/login/signinTwo";
+import SigninThree from "../feature-module/pages/login/signinThree";
+import RegisterTwo from "../feature-module/pages/register/registerTwo";
+import Register from "../feature-module/pages/register/register";
+import RegisterThree from "../feature-module/pages/register/registerThree";
+import Forgotpassword from "../feature-module/pages/forgotpassword/forgotpassword";
+import ForgotpasswordTwo from "../feature-module/pages/forgotpassword/forgotpasswordTwo";
+import ForgotpasswordThree from "../feature-module/pages/forgotpassword/forgotpasswordThree";
 import Resetpassword from "../feature-module/pages/resetpassword/resetpassword";
 import ResetpasswordTwo from "../feature-module/pages/resetpassword/resetpasswordTwo";
 import ResetpasswordThree from "../feature-module/pages/resetpassword/resetpasswordThree";
