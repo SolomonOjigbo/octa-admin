@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../core/redux/store";
-import { loginUser } from "../../../core/redux/apis/auth";
-import ImageWithBasePath from "../../../core/img/imagewithbasebath";
+import { useAppDispatch, useAppSelector } from "../../core/redux/store";
+import { loginUser } from "../../core/redux/apis/auth";
+import ImageWithBasePath from "../../core/img/imagewithbasebath";
 import { Link,useNavigate  } from "react-router-dom";
-import { all_routes } from "../../../Router/all_routes";
-import { logo } from "../../../assets/images";
+import { all_routes } from "../../Router/all_routes";
+import { logo } from "../../assets/images";
 
 const Signin = () => {
   const dispatch = useAppDispatch();

@@ -11,6 +11,7 @@ import FeatherIcon from "feather-icons-react";
 import ImageWithBasePath from "../../core/img/imagewithbasebath";
 import { Search, XCircle } from "react-feather";
 import { all_routes } from "../../Router/all_routes";
+import { logo } from "../../assets/images";
 const Header = () => {
   //SERVER STATUS
   // const dispatch = useDispatch<AppDispatch>();
@@ -200,6 +201,10 @@ const handleLogout = () => {
           onMouseOver={expandMenuOpen}
         >
           <Link to="/dashboard" className="logo logo-normal">
+          <ImageWithBasePath src={logo} alt="img" />
+          </Link>
+             
+          {/* <Link to="/dashboard" className="logo logo-normal">
             <ImageWithBasePath src="assets/img/logo.png" alt="img" />
           </Link>
           <Link to="/dashboard" className="logo logo-white">
@@ -207,7 +212,7 @@ const handleLogout = () => {
           </Link>
           <Link to="/dashboard" className="logo-small">
             <ImageWithBasePath src="assets/img/logo-small.png" alt="img" />
-          </Link>
+          </Link> */}
           <Link
             id="toggle_btn"
             to="#"

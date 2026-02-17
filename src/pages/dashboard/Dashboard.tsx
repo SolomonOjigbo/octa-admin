@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CountUp from "react-countup";
 import {
   File,
@@ -14,21 +14,9 @@ import { ArrowRight } from "react-feather";
 import { all_routes } from "../../Router/all_routes";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../core/redux/store";
-import { AppDispatch } from "../../core/redux/store";
-import { fetchGlobalSuppliers } from "../../core/redux/slices/globalSupplier";
+
 const Dashboard = () => {
   const route = all_routes;
-  const dispatch = useDispatch<AppDispatch>();
-  useEffect(() => {
-  dispatch(fetchGlobalSuppliers());
-}, [dispatch]);
-
-const { suppliers = []} = useSelector(
-  (state: RootState) => state.globalSupplier
-);
-
   // const [chartOptions] = useState({
   //   series: [
   //     {
@@ -240,7 +228,7 @@ const showConfirmationAlert = () => {
                 </div>
                 <div className="dash-widgetcontent">
                   <h5>
-                    <CountUp start={0} end={307144} duration={3} prefix="₦" />
+                    <CountUp start={0} end={307144} duration={3} prefix="$" />
                   </h5>
                   <h6>Total Purchase Due</h6>
                 </div>
@@ -258,7 +246,7 @@ const showConfirmationAlert = () => {
                 </div>
                 <div className="dash-widgetcontent">
                   <h5>
-                    ₦
+                    $
                     <CountUp
                       start={0}
                       end={4385}
@@ -281,7 +269,7 @@ const showConfirmationAlert = () => {
                 </div>
                 <div className="dash-widgetcontent">
                   <h5>
-                    ₦
+                    $
                     <CountUp
                       start={0}
                       end={385656.5}
@@ -305,7 +293,7 @@ const showConfirmationAlert = () => {
                 </div>
                 <div className="dash-widgetcontent">
                   <h5>
-                    ₦
+                    $
                     <CountUp
                       start={0}
                       end={40000}
@@ -330,15 +318,7 @@ const showConfirmationAlert = () => {
             <div className="col-xl-3 col-sm-6 col-12 d-flex">
               <div className="dash-count das1">
                 <div className="dash-counts">
-                  {/* <h4>110</h4> */}
-<h4>
-        <CountUp
-          start={0}
-          end={suppliers.length}
-          duration={2}
-        />
-      </h4>
-   
+                  <h4>110</h4>
                   <h5>Suppliers</h5>
                 </div>
                 <div className="dash-imgs">
@@ -473,7 +453,7 @@ const showConfirmationAlert = () => {
                               Lenevo 3rd Generation
                             </Link>
                           </td>
-                          <td>₦12500</td>
+                          <td>$12500</td>
                         </tr>
                         <tr>
                           <td>2</td>
@@ -489,7 +469,7 @@ const showConfirmationAlert = () => {
                             </Link>
                             <Link to={route.productlist}>Bold V3.2</Link>
                           </td>
-                          <td>₦1600</td>
+                          <td>$1600</td>
                         </tr>
                         <tr>
                           <td>3</td>
@@ -505,7 +485,7 @@ const showConfirmationAlert = () => {
                             </Link>
                             <Link to={route.productlist}>Nike Jordan</Link>
                           </td>
-                          <td>₦2000</td>
+                          <td>$2000</td>
                         </tr>
                         <tr>
                           <td>4</td>
@@ -523,7 +503,7 @@ const showConfirmationAlert = () => {
                               Apple Series 5 Watch
                             </Link>
                           </td>
-                          <td>₦800</td>
+                          <td>$800</td>
                         </tr>
                       </tbody>
                     </table>

@@ -7,6 +7,7 @@ interface SupplierState {
   loading: boolean;
   error: string | null;
   suppliers: Supplier[];
+  count: number;
   selectedSupplier: Supplier | null;
 }
 
@@ -14,6 +15,7 @@ const initialState: SupplierState = {
   loading: false,
   error: null,
   suppliers: [],
+  count:0,
   selectedSupplier: null,
 };
 

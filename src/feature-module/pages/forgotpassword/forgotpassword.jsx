@@ -2,6 +2,7 @@ import React from "react";
 import ImageWithBasePath from "../../../core/img/imagewithbasebath";
 import { Link } from "react-router-dom";
 import { all_routes } from "../../../Router/all_routes";
+import { logo } from "../../../assets/images";
 
 const Forgotpassword = () => {
   const route = all_routes;
@@ -13,7 +14,8 @@ const Forgotpassword = () => {
             <form>
               <div className="login-userset">
                 <div className="login-logo logo-normal">
-                  <ImageWithBasePath src="assets/img/logo.png" alt="img" />
+                  {/* <ImageWithBasePath src="assets/img/logo.png" alt="img" /> */}
+                  <ImageWithBasePath src={logo} alt="img" />
                 </div>
                 <Link to={route.dashboard} className="login-logo logo-white">
                   <ImageWithBasePath src="assets/img/logo-white.png" alt />
@@ -81,7 +83,7 @@ const Forgotpassword = () => {
                   </ul>
                 </div>
                 <div className="my-4 d-flex justify-content-center align-items-center copyright-text">
-                  <p>Copyright © 2023 Teaspoon. All rights reserved</p>
+                  <p>Copyright  © {new Date().getFullYear()} Teaspoon.  All Rights Reserved</p>
                 </div>
               </div>
             </form>
