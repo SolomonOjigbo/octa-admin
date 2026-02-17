@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "boxicons/css/boxicons.css";
+// import "boxicons/css/boxicons.css";
 import "boxicons/css/boxicons.min.css";
 import { Plus, X, Phone, RotateCcw, ChevronUp } from "react-feather";
 import Scrollbars from "react-custom-scrollbars-2";
