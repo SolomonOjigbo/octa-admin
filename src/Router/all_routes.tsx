@@ -80,8 +80,8 @@ export const all_routes = {
   flagicons: "/icon-flag",
   ribbon: "/ui-ribbon",
 
-  chat: "/chat",
-  videocall: "/video-call",
+  // chat: "/chat",
+  // videocall: "/video-call",
   audiocall: "/audio-call",
   email: "/email",
   callhistory: "/call-history",
