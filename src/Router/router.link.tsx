@@ -4,9 +4,39 @@ import { Route, Navigate } from "react-router-dom";
 
 //NEW SETUP ROUTE
 import Signin from "../pages/login/signin";
+import SideLogout from "../core/json/SideLogout";
 import Forgotpassword from "../pages/forgotpassword/forgotpassword";
 import Register from "../pages/register/register";
 import Customers from "../pages/dashboard/customers/customers";
+import Profile from "../pages/dashboard/profile";
+
+import GeneralSettings from "../pages/dashboard/settings/generalsettings/generalsettings";
+import SecuritySettings from "../pages/dashboard/settings/generalsettings/securitysettings";
+import Notification from "../feature-module/settings/generalsettings/notification";
+import ConnectedApps from "../feature-module/settings/generalsettings/connectedapps";
+import SystemSettings from "../pages/dashboard/settings/websitesettings/systemsettings";
+import CompanySettings from "../pages/dashboard/settings/websitesettings/companysettings";
+import LocalizationSettings from "../pages/dashboard/settings/websitesettings/localizationsettings";
+import Prefixes from "../feature-module/settings/websitesettings/prefixes";
+import Preference from "../feature-module/settings/websitesettings/preference";
+import BanIpaddress from "../feature-module/settings/othersettings/ban-ipaddress";
+import StorageSettings from "../feature-module/settings/othersettings/storagesettings";
+
+import Appearance from "../feature-module/settings/websitesettings/appearance";
+import SocialAuthentication from "../feature-module/settings/websitesettings/socialauthentication";
+import LanguageSettings from "../feature-module/settings/websitesettings/languagesettings";
+import InvoiceSettings from "../feature-module/settings/appsetting/invoicesettings";
+import PrinterSettings from "../feature-module/settings/appsetting/printersettings";
+import PosSettings from "../feature-module/settings/websitesettings/possettings";
+import CustomFields from "../feature-module/settings/websitesettings/customfields";
+import EmailSettings from "../feature-module/settings/systemsettings/emailsettings";
+import SmsGateway from "../feature-module/settings/systemsettings/smsgateway";
+import OtpSettings from "../feature-module/settings/systemsettings/otpsettings";
+import GdprSettings from "../feature-module/settings/systemsettings/gdprsettings";
+import PaymentGateway from "../feature-module/settings/financialsettings/paymentgateway";
+import BankSetting from "../feature-module/settings/financialsettings/banksetting";
+import TaxRates from "../feature-module/settings/financialsettings/taxrates";
+import CurrencySettings from "../feature-module/settings/financialsettings/currencysettings";
 //*********************************************************
 
 //OTHER ROUTES 
@@ -123,19 +153,19 @@ import QRcode from "../feature-module/inventory/qrcode";
 import PurchasesList from "../feature-module/purchases/purchaseslist";
 import PurchaseOrderReport from "../feature-module/purchases/purchaseorderreport";
 import PurchaseReturns from "../feature-module/purchases/purchasereturns";
-import Appearance from "../feature-module/settings/websitesettings/appearance";
-import SocialAuthentication from "../feature-module/settings/websitesettings/socialauthentication";
-import LanguageSettings from "../feature-module/settings/websitesettings/languagesettings";
-import InvoiceSettings from "../feature-module/settings/appsetting/invoicesettings";
-import PrinterSettings from "../feature-module/settings/appsetting/printersettings";
-import PosSettings from "../feature-module/settings/websitesettings/possettings";
-import CustomFields from "../feature-module/settings/websitesettings/customfields";
-import EmailSettings from "../feature-module/settings/systemsettings/emailsettings";
-import SmsGateway from "../feature-module/settings/systemsettings/smsgateway";
-import OtpSettings from "../feature-module/settings/systemsettings/otpsettings";
-import GdprSettings from "../feature-module/settings/systemsettings/gdprsettings";
-import PaymentGateway from "../feature-module/settings/financialsettings/paymentgateway";
-import BankSetting from "../feature-module/settings/financialsettings/banksetting";
+// import Appearance from "../feature-module/settings/websitesettings/appearance";
+// import SocialAuthentication from "../feature-module/settings/websitesettings/socialauthentication";
+// import LanguageSettings from "../feature-module/settings/websitesettings/languagesettings";
+// import InvoiceSettings from "../feature-module/settings/appsetting/invoicesettings";
+// import PrinterSettings from "../feature-module/settings/appsetting/printersettings";
+// import PosSettings from "../feature-module/settings/websitesettings/possettings";
+// import CustomFields from "../feature-module/settings/websitesettings/customfields";
+// import EmailSettings from "../feature-module/settings/systemsettings/emailsettings";
+// import SmsGateway from "../feature-module/settings/systemsettings/smsgateway";
+// import OtpSettings from "../feature-module/settings/systemsettings/otpsettings";
+// import GdprSettings from "../feature-module/settings/systemsettings/gdprsettings";
+// import PaymentGateway from "../feature-module/settings/financialsettings/paymentgateway";
+// import BankSetting from "../feature-module/settings/financialsettings/banksetting";
 //import Customers from "../feature-module/people/customers";
 import Variants from "../feature-module/inventory/variants/variant";
 import Suppliers from "../feature-module/people/suppliers";
@@ -154,17 +184,17 @@ import ExpenseReport from "../feature-module/Reports/expensereport";
 import IncomeReport from "../feature-module/Reports/incomereport";
 import TaxReport from "../feature-module/Reports/taxreport";
 import ProfitLoss from "../feature-module/Reports/profitloss";
-import GeneralSettings from "../feature-module/settings/generalsettings/generalsettings";
-import SecuritySettings from "../feature-module/settings/generalsettings/securitysettings";
-import Notification from "../feature-module/settings/generalsettings/notification";
-import ConnectedApps from "../feature-module/settings/generalsettings/connectedapps";
-import SystemSettings from "../feature-module/settings/websitesettings/systemsettings";
-import CompanySettings from "../feature-module/settings/websitesettings/companysettings";
-import LocalizationSettings from "../feature-module/settings/websitesettings/localizationsettings";
-import Prefixes from "../feature-module/settings/websitesettings/prefixes";
-import Preference from "../feature-module/settings/websitesettings/preference";
-import BanIpaddress from "../feature-module/settings/othersettings/ban-ipaddress";
-import StorageSettings from "../feature-module/settings/othersettings/storagesettings";
+// import GeneralSettings from "../feature-module/settings/generalsettings/generalsettings";
+// import SecuritySettings from "../feature-module/settings/generalsettings/securitysettings";
+// import Notification from "../feature-module/settings/generalsettings/notification";
+// import ConnectedApps from "../feature-module/settings/generalsettings/connectedapps";
+// import SystemSettings from "../feature-module/settings/websitesettings/systemsettings";
+// import CompanySettings from "../feature-module/settings/websitesettings/companysettings";
+// import LocalizationSettings from "../feature-module/settings/websitesettings/localizationsettings";
+// import Prefixes from "../feature-module/settings/websitesettings/prefixes";
+// import Preference from "../feature-module/settings/websitesettings/preference";
+// import BanIpaddress from "../feature-module/settings/othersettings/ban-ipaddress";
+// import StorageSettings from "../feature-module/settings/othersettings/storagesettings";
 import Pos from "../feature-module/sales/pos";
 import AttendanceAdmin from "../feature-module/hrm/attendanceadmin";
 import Payslip from "../feature-module/hrm/payslip";
@@ -175,7 +205,8 @@ import SalesReturn from "../feature-module/sales/salesreturn";
 import QuotationList from "../feature-module/sales/quotationlist";
 import Notes from "../feature-module/Application/notes";
 import FileManager from "../feature-module/Application/filemanager";
-import Profile from "../feature-module/pages/profile";
+//import Profile from "../feature-module/pages/profile";
+
 
 import Resetpassword from "../feature-module/pages/resetpassword/resetpassword";
 import ResetpasswordTwo from "../feature-module/pages/resetpassword/resetpasswordTwo";
@@ -204,8 +235,8 @@ import LeavesEmployee from "../feature-module/hrm/leavesemployee";
 import LeaveTypes from "../feature-module/hrm/leavetypes";
 import ProductDetail from "../feature-module/inventory/products/productdetail";
 import { Units } from "../feature-module/inventory/units";
-import TaxRates from "../feature-module/settings/financialsettings/taxrates";
-import CurrencySettings from "../feature-module/settings/financialsettings/currencysettings";
+// import TaxRates from "../feature-module/settings/financialsettings/taxrates";
+// import CurrencySettings from "../feature-module/settings/financialsettings/currencysettings";
 import WareHouses from "../core/modals/peoples/warehouses";
 import Coupons from "../feature-module/coupons/coupons";
 import { all_routes } from "./all_routes";
@@ -1413,6 +1444,13 @@ export const publicRoutes = [
     path: routes.variants,
     name: "variants",
     element: <Variants />,
+    route: Route,
+  },
+      {
+    id: 118,
+    path: "/logout",
+    name: "variants",
+    element: <SideLogout  />,
     route: Route,
   },
 ];

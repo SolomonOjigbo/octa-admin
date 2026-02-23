@@ -108,7 +108,8 @@ const ThemeSettings = () => {
   }, [layoutColor, layoutTheme, layoutView]);
   return (
     <>
-      <div className="customizer-links" id="setdata">
+      <div className="" id="setdata"> 
+        {/* customizer-links */}
         <ul className="sticky-sidebar">
           <li className="sidebar-icons" onClick={showSettings}>
             <Link

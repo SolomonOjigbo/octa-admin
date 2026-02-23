@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useEffect  } from "react";
+import { useAppDispatch, useAppSelector } from "../../core/redux/store";
+import { fetchGlobalProducts } from "../../core/redux/feature-module/global-products/globalProduct";
 import CountUp from "react-countup";
 import {
   File,
