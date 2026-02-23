@@ -19,7 +19,7 @@ const Profile = () => {
               <div className="profile-head"></div>
               <div className="profile-top">
                 <div className="profile-content">
-                  <div className="profile-contentimg">
+                  <div className="profile-contentimg"> 
                     <ImageWithBasePath
                       src="assets/img/customer/customer5.jpg"
                       alt="img"

@@ -1,26 +1,53 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../core/redux/store";
 import { loginUser } from "../../core/redux/apis/auth";
+import { clearError } from "../../core/redux/slices/auth";
 import ImageWithBasePath from "../../core/img/imagewithbasebath";
-import { Link,useNavigate  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { all_routes } from "../../Router/all_routes";
 import { logo } from "../../assets/images";
+import Swal from "sweetalert2";
 
 const Signin = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-    const { loading, error, user } = useAppSelector((state) => state.auth);
+  const { loading, error, user } = useAppSelector((state) => state.auth);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+   const [showPassword, setShowPassword] = useState(false);
 
-  
-    useEffect(() => {
+
+  useEffect(() => {
     if (user) {
-      navigate("/"); 
+      Swal.fire({
+        icon: "success",
+        title: "Login Successful",
+        text: "Welcome back!",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+
+      setTimeout(() => navigate("/"), 2000);
     }
   }, [user, navigate]);
 
-  const handleLogin = () => {
+useEffect(() => {
+  if (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Login Failed",
+      text: "Invalid email or password. Please try again.",
+    }).then(() => {
+      dispatch(clearError()); // 🔥 CLEAR AFTER SHOWING
+    });
+  }
+}, [error, dispatch]);
+
+  // const handleLogin = () => {
+  //   dispatch(loginUser({ email, password }));
+  // };
+    const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
     dispatch(loginUser({ email, password }));
   };
   const route = all_routes;
@@ -49,13 +76,13 @@ const Signin = () => {
                   <label className="form-label">Email Address</label>
                   <div className="form-addons">
                     {/* <input type="text" className="form- control" /> */}
-                     <input
-        type="email"
-         className="form- control"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+                    <input
+                      type="email"
+                      className="form- control"
+                      placeholder="Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
                     <ImageWithBasePath
                       src="assets/img/icons/mail.svg"
                       alt="img"
@@ -70,13 +97,25 @@ const Signin = () => {
                       className="pass-input form-control"
                     /> */}
                     <input
-        type="password"
-        className="pass-input form-control"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-                    <span className="fas toggle-password fa-eye-slash" />
+                     type={showPassword ? "text" : "password"}
+                      className="pass-input form-control"
+                      placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                     <span
+                      onClick={() => setShowPassword(!showPassword)}
+                      style={{
+                        cursor: "pointer",
+                        position: "absolute",
+                        right: "10px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                      }}
+                      className={`fas ${
+                        showPassword ? "fa-eye" : "fa-eye-slash"
+                      }`}
+                    />
                   </div>
                 </div>
                 <div className="form-login authentication-check">
@@ -98,14 +137,14 @@ const Signin = () => {
                   </div>
                 </div>
                 <div className="form-login">
-                      <button onClick={handleLogin} disabled={loading} className="btn btn-login">
-        {loading ? "Logging in..." : " Sign In"}
-      </button>
+                  <button onClick={handleLogin} disabled={loading} className="btn btn-login">
+                    {loading ? "Logging in..." : " Sign In"}
+                  </button>
                   {/* <Link to={route.dashboard} className="btn btn-login">
                     Sign In
                   </Link> */}
                 </div>
-                  {error && <p style={{ color: "red" }}>{error}</p>}
+                {error && <p style={{ color: "red" }}>{error}</p>}
                 <div className="signinform">
                   <h4>
                     New on our platform?
@@ -115,10 +154,10 @@ const Signin = () => {
                     </Link>
                   </h4>
                 </div>
-                <div className="form-setlogin or-text">
+                {/* <div className="form-setlogin or-text">
                   <h4>OR</h4>
-                </div>
-                <div className="form-sociallink">
+                </div> */}
+                {/* <div className="form-sociallink">
                   <ul className="d-flex">
                     <li>
                       <Link to="#" className="facebook-logo">
@@ -148,7 +187,7 @@ const Signin = () => {
                   <div className="my-4 d-flex justify-content-center align-items-center copyright-text">
                     <p>Copyright  © {new Date().getFullYear()} Teaspoon.  All Rights Reserved</p>
                   </div>
-                </div>
+                </div> */}
               </div>
             </form>
           </div>

@@ -241,16 +241,16 @@ export const SidebarDataPat = [
     //   ]
     // }),
 
-    item("Error Pages", null, "FileMinus", {
-      submenu: true,
-      submenuItems: [
-        item("404 Error", "/error-404"),
-        item("500 Error", "/error-500"),
-      ]
-    }),
+    // item("Error Pages", null, "FileMinus", {
+    //   submenu: true,
+    //   submenuItems: [
+    //     item("404 Error", "/error-404"),
+    //     item("500 Error", "/error-500"),
+    //   ]
+    // }),
 
     // item("Blank Page", "/blank-page", "File"),
-    item("Coming Soon", "/coming-soon", "Send"),
+    //item("Coming Soon", "/coming-soon", "Send"),
     item("Under Maintenance", "/under-maintenance", "AlertTriangle"),
   ]),
 
@@ -259,65 +259,65 @@ export const SidebarDataPat = [
       submenu: true,
       submenuItems: [
         item("Profile", "/general-settings"),
-        item("Security", "/security-settings"),
-        item("Notifications", "/notification"),
-        item("Connected Apps", "/connected-apps")
+         item("Security", "/security-settings"),
+        // item("Notifications", "/notification"),
+        // item("Connected Apps", "/connected-apps")
       ]
     }),
 
     item("Website Settings", null, "Globe", {
       submenu: true,
       submenuItems: [
-        item("System Settings", "/system-settings"),
+        //item("System Settings", "/system-settings"),
         item("Company Settings", "/company-settings"),
         item("Localization", "/localization-settings"),
-        item("Prefixes", "/prefixes"),
-        item("Preference", "/preference"),
-        item("Appearance", "/appearance"),
-        item("Social Authentication", "/social-authentication"),
-        item("Language", "/language-settings")
+       // item("Prefixes", "/prefixes"),
+       // item("Preference", "/preference"),
+      //  item("Appearance", "/appearance"),
+       // item("Social Authentication", "/social-authentication"),
+       // item("Language", "/language-settings")
       ]
     }),
 
-    item("App Settings", null, "Smartphone", {
-      submenu: true,
-      submenuItems: [
-        item("Invoice", "/invoice-settings"),
-        item("Printer", "/printer-settings"),
-        item("POS", "/pos-settings"),
-        item("Custom Fields", "/custom-fields"),
-      ]
-    }),
+    // item("App Settings", null, "Smartphone", {
+    //   submenu: true,
+    //   submenuItems: [
+    //     item("Invoice", "/invoice-settings"),
+    //     item("Printer", "/printer-settings"),
+    //     item("POS", "/pos-settings"),
+    //     item("Custom Fields", "/custom-fields"),
+    //   ]
+    // }),
 
-    item("System Settings", null, "Monitor", {
-      submenu: true,
-      submenuItems: [
-        item("Email", "/email-settings"),
-        item("SMS Gateways", "/sms-gateway"),
-        item("OTP", "/otp-settings"),
-        item("GDPR Cookies", "/gdpr-settings"),
-      ]
-    }),
+    // item("System Settings", null, "Monitor", {
+    //   submenu: true,
+    //   submenuItems: [
+    //     item("Email", "/email-settings"),
+    //     item("SMS Gateways", "/sms-gateway"),
+    //     item("OTP", "/otp-settings"),
+    //     item("GDPR Cookies", "/gdpr-settings"),
+    //   ]
+    // }),
 
-    item("Financial Settings", null, "DollarSign", {
-      submenu: true,
-      submenuItems: [
-        item("Payment Gateway", "/payment-gateway-settings"),
-        item("Bank Accounts", "/bank-settings-grid"),
-        item("Tax Rates", "/tax-rates"),
-        item("Currencies", "/currency-settings"),
-      ]
-    }),
+    // item("Financial Settings", null, "DollarSign", {
+    //   submenu: true,
+    //   submenuItems: [
+    //     item("Payment Gateway", "/payment-gateway-settings"),
+    //     item("Bank Accounts", "/bank-settings-grid"),
+    //     // item("Tax Rates", "/tax-rates"),
+    //     // item("Currencies", "/currency-settings"),
+    //   ]
+    // }),
 
-    item("Other Settings", null, "Hexagon", {
-      submenu: true,
-      submenuItems: [
-        item("Storage", "/storage-settings"),
-        item("Ban IP Address", "/ban-ip-address"),
-      ]
-    }),
+    // item("Other Settings", null, "Hexagon", {
+    //   submenu: true,
+    //   submenuItems: [
+    //     item("Storage", "/storage-settings"),
+    //     item("Ban IP Address", "/ban-ip-address"),
+    //   ]
+    // }),
 
-    item("Logout", "/signin", "LogOut")
+    item("Logout", "/logout", "LogOut")
   ]),
 
   // section("UI Interface", [

@@ -15,13 +15,13 @@ import { logo } from "../../assets/images";
 const Header = () => {
   //SERVER STATUS
   // const dispatch = useDispatch<AppDispatch>();
-    const dispatch = useAppDispatch();
-      const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const refreshToken = useSelector((state: RootState) => state.auth.refreshToken);
 
   const { data, loading, error } = useSelector((state: any) => state.status);
   // AUTH STATE
-const { user, accessToken } = useSelector((state: any) => state.auth);
+  const { user, accessToken } = useSelector((state: any) => state.auth);
 
 
   useEffect(() => {
@@ -29,11 +29,11 @@ const { user, accessToken } = useSelector((state: any) => state.auth);
   }, [dispatch]);
 
   // LOGOUT
-const handleLogout = () => {
+  const handleLogout = () => {
     if (refreshToken) {
       dispatch(
         logoutUser(refreshToken, () => {
-          navigate("/signin"); // redirect to signin
+          navigate("/signin"); 
         })
       );
     }
@@ -201,9 +201,9 @@ const handleLogout = () => {
           onMouseOver={expandMenuOpen}
         >
           <Link to="/dashboard" className="logo logo-normal">
-          <ImageWithBasePath src={logo} alt="img" />
+            <ImageWithBasePath src={logo} alt="img" />
           </Link>
-             
+
           {/* <Link to="/dashboard" className="logo logo-normal">
             <ImageWithBasePath src="assets/img/logo.png" alt="img" />
           </Link>
@@ -220,8 +220,8 @@ const handleLogout = () => {
               display: pathname.includes("tasks")
                 ? "none"
                 : pathname.includes("compose")
-                ? "none"
-                : "",
+                  ? "none"
+                  : "",
             }}
             onClick={handlesidebar}
           >
@@ -322,7 +322,7 @@ const handleLogout = () => {
                           Jonita
                           <ImageWithBasePath
                             src="assets/img/profiles/avatar-01.jpg"
-                           alt="img"
+                            alt="img"
                             className="img-fluid"
                           />
                         </Link>
@@ -344,12 +344,12 @@ const handleLogout = () => {
             </div>
           </li>
           {/* /Search */}
- <div>
-      {loading && <>Checking...</>}
-      {error && <p>Server Down: {error}</p>}
-      {data && <p>API Status: {data.message}</p>}
-    </div>
-    
+          <div>
+            {loading && <>Checking...</>}
+            {error && <p>Server Down: {error}</p>}
+            {data && <p>API Status: {data.message}</p>}
+          </div>
+
           {/* Select Store */}
           <li className="nav-item dropdown has-arrow main-drop select-store-dropdown">
             <Link
@@ -698,17 +698,17 @@ const handleLogout = () => {
                   />
                   Logout
                 </Link> */}
-                    <button
-      onClick={handleLogout}
-      className="dropdown-item logout pb-0 flex items-center w-full bg-transparent border-0 text-left"
-    >
-      <ImageWithBasePath
-        src="assets/img/icons/log-out.svg"
-        alt="img"
-        className="me-2"
-      />
-      Logout
-    </button>
+                <button
+                  onClick={handleLogout}
+                  className="dropdown-item logout pb-0 flex items-center w-full bg-transparent border-0 text-left"
+                >
+                  <ImageWithBasePath
+                    src="assets/img/icons/log-out.svg"
+                    alt="img"
+                    className="me-2"
+                  />
+                  Logout
+                </button>
               </div>
             </div>
           </li>

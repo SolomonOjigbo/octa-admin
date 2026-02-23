@@ -1,12 +1,9 @@
-export const downloadSampleCsv = (
-  globalCategoryId: string,
-  brandId?: string
-) => {
+export const downloadSampleCsv = () => {
   const headers = [
     "name",
     "sku",
-    "globalCategoryId",
-    "brandId",
+    "globalCategoryName",
+    "brandName",
     "unitPrice",
     "costPrice",
     "description",
@@ -18,8 +15,8 @@ export const downloadSampleCsv = (
   const sampleRow = [
     "Sample Product",
     "SKU-001",
-    globalCategoryId || "",
-    brandId || "",
+    "Analgesics",      // Category NAME (not ID)
+    "Chefaro",         // Brand NAME (not ID, optional)
     "1000",
     "800",
     "Sample description",
@@ -28,8 +25,7 @@ export const downloadSampleCsv = (
     "true",
   ];
 
-  const csvContent =
-    headers.join(",") + "\n" + sampleRow.join(",");
+  const csvContent = headers.join(",") + "\n" + sampleRow.join(",");
 
   const blob = new Blob([csvContent], {
     type: "text/csv;charset=utf-8;",

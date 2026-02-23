@@ -7,7 +7,7 @@ import {
   GlobalProduct,
 } from "../types/globalProduct";
 import BASE_URL from "./api";
-
+import axios from "axios";
 const getToken = () => localStorage.getItem("accessToken") || "";
 
 // --------------------------------
@@ -83,7 +83,7 @@ export const globalProductApi = {
     const json = await response.json();
     return json.data ?? json;
   },
-  
+
 
   // --------------------------------
   // DELETE PRODUCT
@@ -103,9 +103,9 @@ export const globalProductApi = {
 
 
 
-  // --------------------------------
-  // CSV IMPORT PRODUCT
-  // --------------------------------
+// --------------------------------
+// CSV IMPORT PRODUCT
+// --------------------------------
 // globalProduct.api.ts
 export const globalProductImportApi = {
   importCsvold: async (file: File) => {
@@ -138,15 +138,36 @@ export const globalProductImportApi = {
 
     return json.data;
   },
-  importCsv: async (
-  file: File,
-  globalCategoryId: string,
-  brandId?: string
-) => {
+  importCsvgood: async (
+    file: File,
+    globalCategoryId: string,
+    brandId?: string
+  ) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("globalCategoryId", globalCategoryId);
+    if (brandId) formData.append("brandId", brandId);
+
+    const res = await fetch(
+      `${BASE_URL}/admin/global-product/import-csv`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: formData,
+      }
+    );
+
+    const text = await res.text();
+    const json = JSON.parse(text);
+
+    if (!res.ok) throw new Error(json.message);
+    return json.data;
+  },
+  importCsvstillgood: async (file: File) => {
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("globalCategoryId", globalCategoryId);
-  if (brandId) formData.append("brandId", brandId);
 
   const res = await fetch(
     `${BASE_URL}/admin/global-product/import-csv`,
@@ -159,12 +180,43 @@ export const globalProductImportApi = {
     }
   );
 
-  const text = await res.text();
-  const json = JSON.parse(text);
+  const json = await res.json();
 
   if (!res.ok) throw new Error(json.message);
   return json.data;
-}
+},
+importCsv: async (
+  file: File,
+  onProgress: (percent: number) => void
+) => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await axios.post(
+    `${BASE_URL}/admin/global-product/import-csv`,
+    formData,
+    {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+        "Content-Type": "multipart/form-data",
+      },
+
+      // ⭐ Upload progress tracking
+      onUploadProgress: (event) => {
+        if (event.total) {
+          const percent = Math.round(
+            (event.loaded * 100) / event.total
+          );
+          onProgress(percent);
+        }
+      },
+    }
+  );
+
+  // 🔥 Same return structure as your old code
+  return response.data.data;
+},
+
 
 };
 

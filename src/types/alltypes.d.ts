@@ -4,6 +4,7 @@ declare module 'feather-icons-react/build/IconComponents/Sliders';
 declare module 'react-country-state-city';
 declare module 'react-smooth-scrollbar';
 declare module 'react-simple-maps';
+declare module 'feather-icons-react/build/IconComponents/Map';
 
   declare module '*.png';
   declare module '*.svg';

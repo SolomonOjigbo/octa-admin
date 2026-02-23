@@ -13,6 +13,7 @@ import { globalProductApi, globalProductImportApi } from "../apis/globalProduct"
 
 interface GlobalProductState {
   loading: boolean;
+  progress: number;
   products: GlobalProduct[];
   selectedProduct: GlobalProduct | null;
   importResult: ImportResult | null;
@@ -22,6 +23,7 @@ interface GlobalProductState {
 
 const initialState: GlobalProductState = {
   loading: false,
+  progress: 0,
   products: [],
   selectedProduct: null,
   importResult: null,
@@ -90,6 +92,15 @@ const globalProductSlice = createSlice({
       state.importResult = null;
     },
 
+    setImportProgress(state, action: PayloadAction<number>) {
+      state.progress = action.payload;
+    },
+
+    resetProgress(state) {
+      state.progress = 0;
+    },
+
+
   },
 });
 
@@ -102,7 +113,9 @@ export const {
   updateSuccess,
   deleteSuccess,
   importSuccess,
-    resetImportResult,
+  resetImportResult,
+  setImportProgress,
+  resetProgress
 } = globalProductSlice.actions;
 
 export default globalProductSlice.reducer;
@@ -206,11 +219,56 @@ export const deleteGlobalProduct =
 
 
 // ------- IMPORT CSV -------
-export const importGlobalProductsCsv =
-  (file: File,globalCategoryId: string, brandId?: string) =>
+// export const importGlobalProductsCsvoldd =
+//   (file: File,globalCategoryId: string, brandId?: string) =>
+//   async (dispatch: AppDispatch, getState: () => RootState) => {
+//     try {
+//       dispatch(requestStart());
+
+//       const token =
+//         getState().auth?.accessToken ||
+//         localStorage.getItem("accessToken");
+
+//       if (!token) {
+//         return dispatch(requestFail("No access token found"));
+//       }
+
+//       const result = await globalProductImportApi.importCsv(file,globalCategoryId,brandId);
+//       dispatch(importSuccess(result));
+//     } catch (e: any) {
+//       dispatch(
+//         requestFail(e.message || "Failed to import products")
+//       );
+//     }
+//   };
+// export const importGlobalProductsCsvstillgood =
+//   (file: File) =>
+//     async (dispatch: AppDispatch, getState: () => RootState) => {
+//       try {
+//         dispatch(requestStart());
+
+//         const token =
+//           getState().auth?.accessToken ||
+//           localStorage.getItem("accessToken");
+
+//         if (!token) {
+//           return dispatch(requestFail("No access token found"));
+//         }
+
+//         const result = await globalProductImportApi.importCsv(file);
+
+//         dispatch(importSuccess(result));
+//       } catch (e: any) {
+//         dispatch(requestFail(e.message || "Failed to import products"));
+//       }
+//     };
+
+    export const importGlobalProductsCsv =
+  (file: File) =>
   async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
       dispatch(requestStart());
+      dispatch(resetProgress());
 
       const token =
         getState().auth?.accessToken ||
@@ -220,12 +278,21 @@ export const importGlobalProductsCsv =
         return dispatch(requestFail("No access token found"));
       }
 
-      const result = await globalProductImportApi.importCsv(file,globalCategoryId,brandId);
-      dispatch(importSuccess(result));
-    } catch (e: any) {
-      dispatch(
-        requestFail(e.message || "Failed to import products")
+      const result = await globalProductImportApi.importCsv(
+        file,
+        (percent) => {
+          dispatch(setImportProgress(percent)); // ⭐ UPDATE %
+        }
       );
+
+      dispatch(importSuccess(result));
+
+      // ⭐ AUTO UPDATE PRODUCT LIST
+      dispatch(fetchGlobalProducts());
+
+    } catch (e: any) {
+      dispatch(requestFail(e.message || "Failed to import products"));
     }
   };
+
 

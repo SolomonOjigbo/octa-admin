@@ -98,12 +98,12 @@ const ForgotPassword: React.FC = () => {
                 </div>
 
                 {/* OR Divider */}
-                <div className="form-setlogin or-text">
+                {/* <div className="form-setlogin or-text">
                   <h4>OR</h4>
-                </div>
+                </div> */}
 
                 {/* Social Login */}
-                <div className="form-sociallink">
+                {/* <div className="form-sociallink">
                   <ul className="d-flex justify-content-center">
                     <li>
                       <Link to="#" className="facebook-logo">
@@ -130,7 +130,7 @@ const ForgotPassword: React.FC = () => {
                       </Link>
                     </li>
                   </ul>
-                </div>
+                </div> */}
 
                 {/* Footer */}
                 <div className="my-4 d-flex justify-content-center align-items-center copyright-text">

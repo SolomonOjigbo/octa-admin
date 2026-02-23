@@ -5,6 +5,10 @@ import { AuthState, LoginResponse, User } from "../types/auth";
 const initialState: AuthState & {
   passwordResetSuccess: boolean;
   emailVerificationSuccess: boolean;
+
+    users: User[];
+  selectedUser: User | null;
+  success: boolean;
 } = {
   user: null,
   accessToken: null,
@@ -13,6 +17,10 @@ const initialState: AuthState & {
   error: null,
     passwordResetSuccess: false,
   emailVerificationSuccess: false,
+
+    users: [],
+  selectedUser: null,
+  success: false,
 };
 
 const authSlice = createSlice({
@@ -40,10 +48,69 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
+    //  USER LIST
+setUsers(state, action: PayloadAction<User[]>) {
+  state.users = action.payload;
+  state.loading = false;
+},
+
+//  SELECT USER
+setSelectedUser(state, action: PayloadAction<User>) {
+  state.selectedUser = action.payload;
+  state.loading = false;
+},
+
+clearSelectedUser(state) {
+  state.selectedUser = null;
+},
+
+//  ADD USER
+addUserSuccess(state, action: PayloadAction<User>) {
+  state.users.unshift(action.payload);
+  state.loading = false;
+},
+
+//  UPDATE USER (instant UI)
+updateUserSuccess(state, action: PayloadAction<User>) {
+  const updatedUser = action.payload;
+
+  const index = state.users.findIndex(u => u.id === updatedUser.id);
+  if (index !== -1) {
+    state.users[index] = updatedUser;
+  }
+
+  // also update selected user
+  if (state.selectedUser?.id === updatedUser.id) {
+    state.selectedUser = updatedUser;
+  }
+},
+
+//  DELETE USER
+deleteUserSuccess(state, action: PayloadAction<string>) {
+  state.users = state.users.filter(u => u.id !== action.payload);
+},
+
+//  ACTIVATE / DEACTIVATE
+updateUserStatus(
+  state,
+  action: PayloadAction<{ id: string; isActive: boolean }>
+) {
+  state.users = state.users.map(user =>
+    user.id === action.payload.id
+      ? { ...user, isActive: action.payload.isActive }
+      : user
+  );
+},
     // Add optional action for updating user after invitation
 updateUser(state, action: PayloadAction<User>) {
   state.user = action.payload;
 },
+clearError: (state) => {
+      state.error = null;
+    },
+    clearUser: (state) => {
+      state.user = null;
+    },
   // ---- REFRESH TOKEN ----
     refreshStart(state) {
       state.loading = true;
@@ -148,7 +215,7 @@ updateUser(state, action: PayloadAction<User>) {
 });
 
 export const { loginStart, loginSuccess, loginFailure, logout,
-   refreshStart,
+   clearError, clearUser,refreshStart,
   refreshSuccess,
   refreshFailure,
   acceptInvitationStart,
@@ -168,7 +235,14 @@ export const { loginStart, loginSuccess, loginFailure, logout,
   verifyEmailFailure,
   inviteUserStart,
   inviteUserSuccess,
-  inviteUserFailure
+  inviteUserFailure,
+
+  updateUser,
+  setUsers,
+  setSelectedUser,
+  clearSelectedUser,
+  addUserSuccess,
+  updateUserSuccess,
  } = authSlice.actions;
 
 export default authSlice.reducer;

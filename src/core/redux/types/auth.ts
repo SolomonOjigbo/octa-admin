@@ -26,6 +26,11 @@
 
 export interface User {
   id: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  username: string;
+  profilePicture?: string;
   name: string;
   email: string;
   tenantId: string;
@@ -34,6 +39,8 @@ export interface User {
   roles?: string[];
   storeId?: string;
   warehouseId?: string;
+  lastLogin?: string;
+  updatedAt?: string;
 }
 
 export interface LoginResponse {
