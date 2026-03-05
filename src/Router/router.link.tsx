@@ -8,7 +8,19 @@ import SideLogout from "../core/json/SideLogout";
 import Forgotpassword from "../pages/forgotpassword/forgotpassword";
 import Register from "../pages/register/register";
 import Customers from "../pages/dashboard/customers/customers";
+import Tenants from "../pages/dashboard/tenant/tenant";
 import Profile from "../pages/dashboard/profile";
+
+import ProductList from "../pages/dashboard/products/productlist"; 
+import AddProduct from "../pages/dashboard/products/addproduct";
+import ProductDetail from "../pages/dashboard/products/productdetail";
+import EditProduct from "../pages/dashboard/products/editproduct";
+
+import CategoryList from "../pages/dashboard/category/categorylist";
+
+import BrandList from "../pages/dashboard/brands/brandlist";
+
+import StoreList from "../pages/dashboard/stores/storelist";
 
 import GeneralSettings from "../pages/dashboard/settings/generalsettings/generalsettings";
 import SecuritySettings from "../pages/dashboard/settings/generalsettings/securitysettings";
@@ -51,11 +63,11 @@ import ForgotpasswordThree from "../feature-module/pages/forgotpassword/forgotpa
 // END OTHER ROUTES
 import Dashboard from "../feature-module/dashboard/Dashboard";
 
-import ProductList from "../feature-module/inventory/products/productlist"; 
-import AddProduct from "../feature-module/inventory/products/addproduct";
+// import ProductList from "../feature-module/inventory/products/productlist"; 
+// import AddProduct from "../feature-module/inventory/products/addproduct";
 
 import SalesDashbaord from "../feature-module/dashboard/salesdashbaord";
-import BrandList from "../feature-module/inventory/brandlist";
+// import BrandList from "../feature-module/inventory/brandlist";
 import VariantAttributes from "../feature-module/inventory/variantattributes";
 import Warranty from "../feature-module/inventory/warranty";
 import PrintBarcode from "../feature-module/inventory/printbarcode";
@@ -141,9 +153,9 @@ import Calendar from "../feature-module/Application/calendar";
 import FormWizard from "../feature-module/uiinterface/forms/formelements/form-wizard";
 import ExpiredProduct from "../feature-module/inventory/expiredproduct";
 import LowStock from "../feature-module/inventory/lowstock";
-import CategoryList from "../feature-module/inventory/categorylist";
+// import CategoryList from "../feature-module/inventory/categorylist";
 import SubCategories from "../feature-module/inventory/subcategories";
-import EditProduct from "../feature-module/inventory/products/editproduct";
+// import EditProduct from "../feature-module/inventory/products/editproduct";
 // import Videocall from "../feature-module/Application/videocall";
 import Audiocall from "../feature-module/Application/audiocall";
 import Email from "../feature-module/Application/email";
@@ -169,7 +181,7 @@ import PurchaseReturns from "../feature-module/purchases/purchasereturns";
 //import Customers from "../feature-module/people/customers";
 import Variants from "../feature-module/inventory/variants/variant";
 import Suppliers from "../feature-module/people/suppliers";
-import StoreList from "../core/modals/peoples/storelist";
+// import StoreList from "../core/modals/peoples/storelist";
 import Managestock from "../feature-module/stock/managestock";
 import StockAdjustment from "../feature-module/stock/stockAdjustment";
 import StockTransfer from "../feature-module/stock/stockTransfer";
@@ -233,7 +245,7 @@ import AddEmployee from "../feature-module/hrm/addemployee";
 import LeavesAdmin from "../feature-module/hrm/leavesadmin";
 import LeavesEmployee from "../feature-module/hrm/leavesemployee";
 import LeaveTypes from "../feature-module/hrm/leavetypes";
-import ProductDetail from "../feature-module/inventory/products/productdetail";
+// import ProductDetail from "../feature-module/inventory/products/productdetail";
 import { Units } from "../feature-module/inventory/units";
 // import TaxRates from "../feature-module/settings/financialsettings/taxrates";
 // import CurrencySettings from "../feature-module/settings/financialsettings/currencysettings";
@@ -1451,6 +1463,13 @@ export const publicRoutes = [
     path: "/logout",
     name: "variants",
     element: <SideLogout  />,
+    route: Route,
+  },
+    {
+    id: 119,
+    path: routes.tenants,
+    name: "tenants",
+    element: <Tenants />,
     route: Route,
   },
 ];

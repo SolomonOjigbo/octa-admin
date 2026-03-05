@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { updateGlobalCustomer } from "../../../core/redux/slices/customer";
 import { Customer } from "@/core/redux/types/customer";
-import { AppDispatch } from "@/core/redux/store";
+import { AppDispatch, RootState } from "@/core/redux/store";
 
 interface CustomerEditModalProps {
   selectedCustomerEdit: Customer | null;
@@ -13,7 +13,11 @@ interface CustomerEditModalProps {
 const CustomerEditModal: React.FC<CustomerEditModalProps> = ({ selectedCustomerEdit }) => {
   const dispatch = useDispatch<AppDispatch>();
   const MySwal = withReactContent(Swal);
+ const tenants = useSelector((state: RootState) => state.tenant.tenants);
+
   const [form, setForm] = useState<Partial<Customer>>({});
+  const [showTenantDropdown, setShowTenantDropdown] = useState(false);
+  const [tenantSearch, setTenantSearch] = useState("");
 
   useEffect(() => {
     if (selectedCustomerEdit) {
@@ -21,6 +25,18 @@ const CustomerEditModal: React.FC<CustomerEditModalProps> = ({ selectedCustomerE
     }
   }, [selectedCustomerEdit]);
 
+    const filteredTenants = tenants.filter((t) =>
+    t.name.toLowerCase().includes(tenantSearch.toLowerCase())
+  );
+
+  const handleTenantSelect = (tenant: any) => {
+    setForm((prev) => ({
+      ...prev,
+      tenantId: tenant.id,
+      tenantName: tenant.name, // optional, to show selected name
+    }));
+    setShowTenantDropdown(false);
+  };
 
 const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
   const { name, value, type } = e.target;
@@ -42,7 +58,21 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
   const handleSubmit = async () => {
     if (!selectedCustomerEdit) return;
     try {
-      await dispatch(updateGlobalCustomer(selectedCustomerEdit.id, form));
+      const payload = {
+  name: form.name,
+  email: form.email,
+  phone: form.phone,
+  address: form.address,
+  dateOfBirth: form.dateOfBirth,
+  loyaltyNumber: form.loyaltyNumber,
+  segment: form.segment,
+  defaultPaymentTerm: form.defaultPaymentTerm,
+  isActive: form.isActive,
+  //tenantId: form.tenantId,
+  tags: form.tags,
+      }
+      //await dispatch(updateGlobalCustomer(selectedCustomerEdit.id, form));
+         await dispatch(updateGlobalCustomer(selectedCustomerEdit.id, payload));
       MySwal.fire("Updated!", "Customer has been updated.", "success");
       document.getElementById("customer-edit-close-btn")?.click();
     } catch (err: any) {
@@ -67,8 +97,45 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
           <div className="modal-body custom-modal-body">
             <form>
               <div className="row">
+                   <div className="col-lg-4">
+                  <div className="input-blocks position-relative">
+                    <label>Tenant</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Search tenant..."
+                      value={(form as any).tenantName || ""}
+                      onFocus={() => setShowTenantDropdown(true)}
+                      onChange={(e) => {
+                        setTenantSearch(e.target.value);
+                        setForm((prev) => ({ ...prev, tenantName: e.target.value }));
+                        setShowTenantDropdown(true);
+                      }}
+                    />
+                    {showTenantDropdown && (
+                      <div
+                        className="dropdown-menu show w-100"
+                        style={{ maxHeight: 200, overflowY: "auto" }}
+                      >
+                        {filteredTenants.length === 0 && (
+                          <div className="dropdown-item text-muted">No tenants found</div>
+                        )}
+                        {filteredTenants.map((tenant) => (
+                          <button
+                            type="button"
+                            key={tenant.id}
+                            className="dropdown-item"
+                            onClick={() => handleTenantSelect(tenant)}
+                          >
+                            {tenant.name}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
                 {[
-                  "tenantId",
+                 // "tenantId",
                   "name",
                   "email",
                   "phone",

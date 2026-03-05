@@ -351,7 +351,7 @@ const Header = () => {
           </div>
 
           {/* Select Store */}
-          <li className="nav-item dropdown has-arrow main-drop select-store-dropdown">
+          {/* <li className="nav-item dropdown has-arrow main-drop select-store-dropdown">
             <Link
               to="#"
               className="dropdown-toggle nav-link select-store"
@@ -404,19 +404,18 @@ const Header = () => {
                 Grocery Eden
               </Link>
             </div>
-          </li>
+          </li> */}
           {/* /Select Store */}
 
           {/* Flag */}
-          <li className="nav-item dropdown has-arrow flag-nav nav-item-box">
+          {/* <li className="nav-item dropdown has-arrow flag-nav nav-item-box">
             <Link
               className="nav-link dropdown-toggle"
               data-bs-toggle="dropdown"
               to="#"
               role="button"
             >
-              {/* <i data-feather="globe" /> */}
-              {/* <FeatherIcon icon="globe" /> */}
+           
               <ImageWithBasePath
                 src="assets/img/flags/us.png"
                 alt="img"
@@ -457,7 +456,7 @@ const Header = () => {
                 German
               </Link>
             </div>
-          </li>
+          </li> */}
           {/* /Flag */}
           <li className="nav-item nav-item-box">
             <Link
