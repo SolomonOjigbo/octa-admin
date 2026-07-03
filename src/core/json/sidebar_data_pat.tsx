@@ -78,17 +78,17 @@ export const SidebarDataPat = [
     item("Products", "/product-list", "Box"),
     item("Create Product", "/add-product", "PlusSquare"),
     item("Expired Products", "/expired-products", "Codesandbox"),
-    item("Low Stocks", "/low-stocks", "TrendingDown"),
+    // item("Low Stocks", "/low-stocks", "TrendingDown"),
     item("Category", "/category-list", "Codepen"),
-    item("Sub Category", "/sub-categories", "Speaker"),
+    // item("Sub Category", "/sub-categories", "Speaker"),
     item("Brands", "/brand-list", "Tag"),
     // item("Units", "/units", "Speaker"),
     item("Variants", "/variants", "Layers"),
     item("Variant Attributes", "/variant-attributes", "Layers"),
     // item("Warranties", "/warranty", "Bookmark"),
     item("Print Barcode", "/barcode", "AlignJustify"),
-    item("Print QR Code", "/qrcode", "Maximize")
-  ]),
+    // item("Print QR Code", "/qrcode", "Maximize")
+  ]), 
 
   section("Stock", [
     item("Manage Stock", "/manage-stocks", "Package"),
@@ -100,8 +100,8 @@ export const SidebarDataPat = [
     item("Sales", "/sales-list", "ShoppingCart"),
     item("Invoices", "/invoice-report", "FileText"),
     item("Sales Return", "/sales-returns", "Copy"),
-    item("Quotation", "/quotation-list", "Save"),
-    item("POS", "/pos", "HardDrive"),
+    // item("Quotation", "/quotation-list", "Save"),
+    // item("POS", "/pos", "HardDrive"),
   ]),
 
   // section("Promo", [
@@ -125,6 +125,7 @@ export const SidebarDataPat = [
   ]),
 
   section("People", [
+    item("Tenants", "/tenants", "UserCheck"),
     item("Customers", "/customers", "User"),
     item("Suppliers", "/suppliers", "Users"),
     item("Stores", "/store-list", "Home"),
@@ -171,10 +172,10 @@ export const SidebarDataPat = [
     item("Invoice Report", "/invoice-report", "File"),
     item("Supplier Report", "/supplier-report", "UserCheck"),
     item("Customer Report", "/customer-report", "User"),
-    item("Expense Report", "/expense-report", "FileText"),
-    item("Income Report", "/income-report", "BarChart"),
-    item("Tax Report", "/tax-report", "Database"),
-    item("Profit & Loss", "/profit-loss-report", "TrendingDown"),
+    // item("Expense Report", "/expense-report", "FileText"),
+    // item("Income Report", "/income-report", "BarChart"),
+    // item("Tax Report", "/tax-report", "Database"),
+    // item("Profit & Loss", "/profit-loss-report", "TrendingDown"),
   ]),
 
   section("User Management", [
@@ -251,7 +252,7 @@ export const SidebarDataPat = [
 
     // item("Blank Page", "/blank-page", "File"),
     //item("Coming Soon", "/coming-soon", "Send"),
-    item("Under Maintenance", "/under-maintenance", "AlertTriangle"),
+    //item("Under Maintenance", "/under-maintenance", "AlertTriangle"),
   ]),
 
   section("Settings", [

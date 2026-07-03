@@ -11,6 +11,7 @@ import customer from "./slices/customer";
 import user from "./slices/user"
 import store from "./slices/store"
 import invoice from "./slices/invoice"
+import tenant from "./slices/tenantSlice";
 
 
 import initialState from "./initial.value";
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
   user: user,
   store: store,
   globalVariant: globalVariant,
-  invoice: invoice
+  invoice: invoice,
+  tenant: tenant,
 });
 
 export default rootReducer;
