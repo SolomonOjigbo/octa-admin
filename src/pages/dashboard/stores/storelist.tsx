@@ -8,44 +8,47 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { Filter, Sliders, PlusCircle, Edit, Trash2, Eye, User, Globe, RotateCcw } from "react-feather";
 
-import CustomerModal from "./customerModal";
-import CustomerEditModal from "./editCustomer";
-import { fetchGlobalCustomers, deleteGlobalCustomer } from "../../../core/redux/slices/customer";
+import StoreModal from "./storeModal";
+import UserStoreModal from "./editStore";
+import { fetchGlobalStores, deleteGlobalStore } from "../../../core/redux/slices/store";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import ImageWithBasePath from "../../../core/img/imagewithbasebath";
-import { exportCustomersToExcel, exportCustomersToPDF } from "../DataExport/exportCustomer";
+import { exportStoresToExcel, exportStoresToPDF } from "../../../feature-module/inventory/DataExport/exportStore";
 
-const Customers = () => {
+const Stores = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { customers = [], loading } = useSelector((state: RootState) => state.customer);
+  const { stores = [], loading } = useSelector((state: RootState) => state.store);
 
   const [filteredData, setFilteredData] = useState<any[]>([]);
   const [searchText, setSearchText] = useState("");
   const [isFilterVisible, setIsFilterVisible] = useState(false);
-  const [selectedCustomerEdit, setSelectedCustomerEdit] = useState<any>(null);
+  const [selectedStoreEdit, setSelectedStoreEdit] = useState<any>(null);
 
-  // Fetch customers on mount
+  // Fetch stores on mount
   useEffect(() => {
-    dispatch(fetchGlobalCustomers());
+    dispatch(fetchGlobalStores());
   }, [dispatch]);
 
   // Prepare table data safely
   const tableData = useMemo(
     () =>
-      customers
+      stores
         .filter((c): c is NonNullable<typeof c> => c !== null && c !== undefined)
-        .map((customer) => ({
-          key: customer.id || Math.random().toString(),
-          customerId: customer.id || "",
-          name: customer.name || "N/A",
-          email: customer.email || "N/A",
-          phone: customer.phone || "N/A",
-          address: customer.address || "N/A",
-          createdAt: customer.createdAt
-            ? new Date(customer.createdAt).toLocaleDateString()
+        .map((store) => ({
+          key: store.id || Math.random().toString(),
+          storeId: store.id || "",
+          name: store.name || "N/A",
+          email: store.email || "N/A",
+          phone: store.phone || "N/A",
+          address: store.address || "N/A",
+          isMain: store.isMain,
+          type: store.type,
+          status: store.status,
+          createdAt: store.createdAt
+            ? new Date(store.createdAt).toLocaleDateString()
             : "N/A",
         })),
-    [customers]
+    [stores]
   );
 
   // Apply search filter
@@ -74,19 +77,19 @@ const Customers = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await dispatch(deleteGlobalCustomer(id));
-          setFilteredData((prev) => prev.filter((item) => item.customerId !== id));
-          MySwal.fire("Deleted!", "Customer has been deleted.", "success");
+          await dispatch(deleteGlobalStore(id));
+          setFilteredData((prev) => prev.filter((item) => item.storeId !== id));
+          MySwal.fire("Deleted!", "Store has been deleted.", "success");
         } catch {
-          MySwal.fire("Error!", "Failed to delete customer.", "error");
+          MySwal.fire("Error!", "Failed to delete store.", "error");
         }
       }
     });
   };
 
-  // Unique customers for dropdown filter
-  const uniqueCustomers = Array.from(
-    new Map(customers.filter(Boolean).map((c) => [c!.id, c!])).values()
+  // Unique stores for dropdown filter
+  const uniqueStores = Array.from(
+    new Map(stores.filter(Boolean).map((c) => [c!.id, c!])).values()
   );
 
   // Table columns
@@ -100,7 +103,7 @@ const Customers = () => {
       ),
     },
     {
-      title: "Customer Name",
+      title: "Name",
       dataIndex: "name",
       sorter: (a: any, b: any) => a.name.localeCompare(b.name),
     },
@@ -119,6 +122,25 @@ const Customers = () => {
       dataIndex: "address",
       sorter: (a: any, b: any) => a.address.localeCompare(b.address),
     },
+       {
+  title: "is Main",
+  dataIndex: "isMain",
+  sorter: (a: any, b: any) => {
+    return (a.isMain === b.isMain) ? 0 : a.isMain ? 1 : -1;
+  },
+  render: (value: boolean) => (value ? "True" : "False"),
+},
+
+            {
+      title: "Type",
+      dataIndex: "type",
+      sorter: (a: any, b: any) => a.type.localeCompare(b.type),
+    },
+                {
+      title: "Status",
+      dataIndex: "status",
+      sorter: (a: any, b: any) => a.status.localeCompare(b.status),
+    },
     {
       title: "Created At",
       dataIndex: "createdAt",
@@ -129,22 +151,22 @@ const Customers = () => {
       title: "Actions",
       dataIndex: "actions",
       render: (_: any, record: any) => {
-        const customer = customers.find((c) => c?.id === record.customerId);
+        const store = stores.find((c) => c?.id === record.storeId);
         return (
           <div className="edit-delete-action">
             <Link
               className="me-2 p-2"
               to="#"
               data-bs-toggle="modal"
-              data-bs-target="#customer-edit-modal"
-              onClick={() => customer && setSelectedCustomerEdit(customer)}
+              data-bs-target="#store-edit-modal"
+              onClick={() => store && setSelectedStoreEdit(store)}
             >
               <Edit className="feather-edit" />
             </Link>
             <Link
               className="confirm-text p-2"
               to="#"
-              onClick={() => showConfirmationAlert(record.customerId)}
+              onClick={() => showConfirmationAlert(record.storeId)}
             >
               <Trash2 className="feather-trash-2" />
             </Link>
@@ -157,14 +179,14 @@ const Customers = () => {
     },
   ];
 
-    const exportData = customers.map((customer) => ({
-      customerId: customer.id,
-    name: customer.name,
-    email: customer.email || "N/A",
-    phone: customer.phone || "N/A",
-    address: customer.address || "N/A",
-    createdAt: customer.createdAt
-      ? new Date(customer.createdAt).toLocaleDateString()
+    const exportData = stores.map((store) => ({
+      id: store.id,
+    name: store.name,
+    email: store.email || "N/A",
+    phone: store.phone || "N/A",
+    address: store.address || "N/A",
+    createdAt: store.createdAt
+      ? new Date(store.createdAt).toLocaleDateString()
       : "N/A",
   }));
 
@@ -175,22 +197,22 @@ const Customers = () => {
           <div className="page-header">
           <div className="add-item d-flex">
             <div className="page-title">
-              <h4>Customer</h4>
-              <h6>Manage your customers</h6>
+              <h4>Store</h4>
+              <h6>Manage your stores</h6>
             </div>
           </div>
 
           <ul className="table-top-head">
             <li>
               <OverlayTrigger placement="top" overlay={<Tooltip>Pdf</Tooltip>}>
-                <Link to="#" onClick={() => exportCustomersToPDF(exportData)}>
+                <Link to="#" onClick={() => exportStoresToPDF(exportData)}>
                   <ImageWithBasePath src="assets/img/icons/pdf.svg" alt="img" />
                 </Link>
               </OverlayTrigger>
             </li>
             <li>
               <OverlayTrigger placement="top" overlay={<Tooltip>Excel</Tooltip>}>
-                <Link to="#" onClick={() => exportCustomersToExcel(exportData)}>
+                <Link to="#" onClick={() => exportStoresToExcel(exportData)}>
                   <ImageWithBasePath
                     src="assets/img/icons/excel.svg"
                     alt="img"
@@ -207,7 +229,7 @@ const Customers = () => {
             </li>
             <li>
               <OverlayTrigger placement="top" overlay={<Tooltip>Refresh</Tooltip>}>
-                <Link to="#" onClick={() => dispatch(fetchGlobalCustomers())}>
+                <Link to="#" onClick={() => dispatch(fetchGlobalStores())}>
                   <RotateCcw />
                 </Link>
               </OverlayTrigger>
@@ -219,23 +241,23 @@ const Customers = () => {
               to="#"
               className="btn btn-added me-2"
               data-bs-toggle="modal"
-              data-bs-target="#customer-modal"
+              data-bs-target="#store-modal"
             >
               <PlusCircle className="me-2" />
-              Add New Customer
+              Add New Store
             </Link>
           </div>
         </div>
         {/* <div className="page-header d-flex justify-content-between align-items-center mb-3">
-          <h4>Customers</h4>
+          <h4>Stores</h4>
           <Link
             to="#"
             className="btn btn-added me-2"
             data-bs-toggle="modal"
-            data-bs-target="#customer-modal"
+            data-bs-target="#store-modal"
           >
             <PlusCircle className="me-2" />
-            Add New Customer
+            Add New Store
           </Link>
         </div> */}
 
@@ -262,13 +284,13 @@ const Customers = () => {
                     <User className="info-img" />
                     <Select
                       options={[
-                        { label: "All Customers", value: "" },
-                        ...uniqueCustomers.map((c) => ({
+                        { label: "All Stores", value: "" },
+                        ...uniqueStores.map((c) => ({
                           label: c.name,
                           value: c.name,
                         })),
                       ]}
-                      placeholder="Filter by Customer Name"
+                      placeholder="Filter by Store Name"
                       isClearable
                       value={null}
                       onChange={() => {}}
@@ -276,17 +298,7 @@ const Customers = () => {
                   </div>
                 </div>
                 <div className="col-lg-3 col-sm-6 col-12">
-                  <div className="input-blocks">
-                    <Globe className="info-img" />
-                    <Select
-                      options={[
-                        { label: "All Countries", value: "" },
-                        { label: "India", value: "India" },
-                        { label: "USA", value: "USA" },
-                      ]}
-                      placeholder="Filter by Country"
-                    />
-                  </div>
+              
                 </div>
               </div>
             </div>
@@ -298,18 +310,18 @@ const Customers = () => {
           <Table
             columns={columns}
             dataSource={filteredData}
-            rowKey={(record) => record.customerId || Math.random().toString()}
+            rowKey={(record) => record.storeId || Math.random().toString()}
             loading={loading}
           />
         </div>
       </div>
 
       {/* MODALS */}
-      <CustomerModal />
-      <CustomerEditModal selectedCustomerEdit={selectedCustomerEdit} />
+      <StoreModal />
+      <UserStoreModal selectedStoreEdit={selectedStoreEdit} />
    
     </div>
   );
 };
 
-export default Customers;
+export default Stores;
