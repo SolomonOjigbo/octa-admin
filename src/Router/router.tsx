@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Header from "../InitialPage/Sidebar/Header";
 import Sidebar from "../InitialPage/Sidebar/Sidebar";
+import AlertBanner from "../InitialPage/AlertBanner";
 import { pagesRoute, posRoutes, publicRoutes } from "./router.link";
 import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -26,6 +27,7 @@ const AllRoutes = () => {
         <Sidebar />
       )} */}
       <Sidebar />
+      <AlertBanner />
       <Outlet />
       <ThemeSettings />
       <Loader />

@@ -50,4 +50,18 @@ export const notificationApi = {
     const res = await fetch(`${BASE_URL}/notifications/${id}`, { method: "DELETE", headers: authHeaders() });
     if (!res.ok) throw new Error(await res.text());
   },
+
+  banners: async (): Promise<{ data: AdminNotification[] }> => {
+    const res = await fetch(`${BASE_URL}/notifications/banners`, { headers: authHeaders() });
+    if (!res.ok) throw new Error(await res.text());
+    return res.json();
+  },
+
+  dismissBanner: async (id: string): Promise<void> => {
+    const res = await fetch(`${BASE_URL}/notifications/${id}/dismiss`, {
+      method: "POST",
+      headers: authHeaders(),
+    });
+    if (!res.ok) throw new Error(await res.text());
+  },
 };
