@@ -1,9 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
+import { notification as antdNotification } from "antd";
+import BASE_URL from "../../core/redux/apis/api";
 import { notificationApi, AdminNotification } from "../../core/redux/apis/notification";
 
-const POLL_MS = 30000;
+// SSE is primary; the poll is a fallback for when the stream drops.
+const POLL_MS = 60000;
 
 const typeIcon: Record<string, string> = {
   success: "check-circle",
@@ -45,6 +48,31 @@ const NotificationBell: React.FC = () => {
     refresh();
     const t = setInterval(refresh, POLL_MS);
     return () => clearInterval(t);
+  }, [refresh]);
+
+  // Real-time SSE stream (token in query — EventSource can't set headers).
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) return undefined;
+    const base = (BASE_URL || "http://localhost:5000/api/v1").replace(/\/$/, "");
+    const es = new EventSource(`${base}/notifications/stream?token=${encodeURIComponent(token)}`);
+
+    es.addEventListener("notification", (e: MessageEvent) => {
+      let payload: any = {};
+      try {
+        payload = JSON.parse(e.data);
+      } catch (_) {
+        /* ignore malformed frame */
+      }
+      refresh();
+      antdNotification.open({
+        message: payload.title || payload.category || "Notification",
+        description: payload.message,
+        placement: "topRight",
+      });
+    });
+
+    return () => es.close();
   }, [refresh]);
 
   const handleOpen = async (n: AdminNotification) => {
