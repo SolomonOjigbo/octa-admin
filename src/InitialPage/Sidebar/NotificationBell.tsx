@@ -72,6 +72,11 @@ const NotificationBell: React.FC = () => {
       });
     });
 
+    // A new tenant banner — bridge to the AlertBanner via a window event.
+    es.addEventListener("banner", () => {
+      window.dispatchEvent(new CustomEvent("octa:banner"));
+    });
+
     return () => es.close();
   }, [refresh]);
 

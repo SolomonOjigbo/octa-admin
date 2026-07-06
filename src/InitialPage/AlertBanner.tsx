@@ -35,7 +35,13 @@ const AlertBanner: React.FC = () => {
   useEffect(() => {
     load();
     const t = setInterval(load, BANNER_POLL_MS);
-    return () => clearInterval(t);
+    // Live refresh when the SSE bell reports a new banner.
+    const onBanner = () => load();
+    window.addEventListener("octa:banner", onBanner);
+    return () => {
+      clearInterval(t);
+      window.removeEventListener("octa:banner", onBanner);
+    };
   }, [load]);
 
   const dismiss = async (id: string) => {
