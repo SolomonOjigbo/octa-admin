@@ -171,6 +171,7 @@ export const SidebarData = [
           { label: "B2B Connections", link: "/b2b-connections", icon: <Icon.Share2 />, showSubRoute: false, submenu: false },
           { label: "Barcodes", link: "/barcodes", icon: <Icon.Grid />, showSubRoute: false, submenu: false },
           { label: "Platform Settings", link: "/platform-settings", icon: <Icon.Settings />, showSubRoute: false, submenu: false },
+          { label: "Audit Logs", link: "/audit-logs", icon: <Icon.Shield />, showSubRoute: false, submenu: false },
         ]
       },
 

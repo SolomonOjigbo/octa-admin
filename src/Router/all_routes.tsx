@@ -193,6 +193,7 @@ export const all_routes = {
   payments: "/payments",
   possessions: "/pos-sessions",
   inventorymovements: "/inventory-movements",
+  auditlogs: "/audit-logs",
   permissions: "/permissions",
   deleteaccount: "/delete-account",
   employeegrid: "/employees-grid",

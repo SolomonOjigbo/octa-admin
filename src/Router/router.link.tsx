@@ -243,6 +243,7 @@ import Barcodes from "../feature-module/admin/Barcodes";
 import B2bConnections from "../feature-module/admin/B2bConnections";
 import AdminWarehouses from "../feature-module/admin/Warehouses";
 import TenantCatalog from "../feature-module/admin/TenantCatalog";
+import AuditLogs from "../feature-module/admin/AuditLogs";
 import {
   Transactions, Payments, PosSessions, Stock, InventoryMovements,
   StockTransfers, Quotations, PurchaseOrders,
@@ -1452,6 +1453,13 @@ export const publicRoutes = [
     path: routes.inventorymovements,
     name: "inventorymovements",
     element: (<RequireSuperAdmin><InventoryMovements /></RequireSuperAdmin>),
+    route: Route,
+  },
+  {
+    id: 132,
+    path: routes.auditlogs,
+    name: "auditlogs",
+    element: (<RequireSuperAdmin><AuditLogs /></RequireSuperAdmin>),
     route: Route,
   },
   {
