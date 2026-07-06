@@ -107,6 +107,9 @@ export const baseApi = createApi({
     'B2bConnection',
     'Barcode',
     'AuditLog',
+    'TenantCategory',
+    'TenantCatalogProduct',
+    'TenantSupplier',
   ],
   endpoints: () => ({}),
 });

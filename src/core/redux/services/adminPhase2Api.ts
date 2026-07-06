@@ -58,6 +58,11 @@ export const adminPhase2Api = baseApi.injectEndpoints({
       transformResponse: list,
       providesTags: [{ type: "ProductSupplier", id: "LIST" }],
     }),
+    createProductSupplier: builder.mutation<any, { tenantId: string; supplierId: string; tenantProductId: string; [k: string]: any }>({
+      query: (body) => ({ url: "admin/product-supplier", method: "POST", body }),
+      transformResponse: one,
+      invalidatesTags: [{ type: "ProductSupplier", id: "LIST" }],
+    }),
     deleteProductSupplier: builder.mutation<any, string>({
       query: (id) => ({ url: `admin/product-supplier/${id}`, method: "DELETE" }),
       invalidatesTags: [{ type: "ProductSupplier", id: "LIST" }],
@@ -137,6 +142,7 @@ export const {
   useToggleSettingMutation,
   useDeleteSettingMutation,
   useGetProductSuppliersQuery,
+  useCreateProductSupplierMutation,
   useDeleteProductSupplierMutation,
   useGetBarcodesQuery,
   useDeleteBarcodeMutation,

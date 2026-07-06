@@ -1,8 +1,8 @@
 // src/feature-module/admin/common/CrudPage.tsx
 //
-// Reusable admin management page: header + table + optional create/edit modal
-// (built from a simple field config) + delete + custom per-row actions. Domain
-// pages stay thin — pass data, columns, and the RTK Query mutation callbacks.
+// CrudTable: reusable table + field-driven create/edit modal + delete + custom row
+// actions, with no page chrome — embeddable inside tabs/cards.
+// CrudPage: CrudTable wrapped in the standard page header/card.
 
 import React, { useState } from "react";
 import {
@@ -19,39 +19,37 @@ export interface CrudField {
   placeholder?: string;
 }
 
-export interface CrudPageProps {
-  title: string;
-  subtitle?: string;
+export interface CrudTableProps {
+  /** Singular noun for modal titles, e.g. "Category" -> "New Category". */
+  title?: string;
   rows: any[];
   loading?: boolean;
   columns: any[];
   idKey?: string;
   rowKey?: string | ((r: any) => string);
-  /** Provide to enable create + edit modals. */
   fields?: CrudField[];
   onCreate?: (values: any) => Promise<any>;
   onUpdate?: (id: string, values: any) => Promise<any>;
   onDelete?: (id: string) => Promise<any>;
   createLabel?: string;
-  /** Extra per-row action nodes (toggles, activate/deactivate, etc.). */
   extraActions?: (record: any) => React.ReactNode;
-  /** Header content (e.g. a tenant filter) rendered left of the New button. */
   toolbar?: React.ReactNode;
+  card?: boolean;
 }
 
 const renderField = (f: CrudField) => {
   switch (f.type) {
     case "textarea": return <Input.TextArea rows={2} placeholder={f.placeholder} />;
     case "number": return <InputNumber style={{ width: "100%" }} placeholder={f.placeholder} />;
-    case "select": return <Select options={f.options} placeholder={f.placeholder} optionFilterProp="label" showSearch />;
+    case "select": return <Select options={f.options} placeholder={f.placeholder} optionFilterProp="label" showSearch allowClear />;
     case "switch": return <Switch />;
     default: return <Input placeholder={f.placeholder} />;
   }
 };
 
-const CrudPage: React.FC<CrudPageProps> = ({
-  title, subtitle, rows, loading, columns, idKey = "id", rowKey,
-  fields, onCreate, onUpdate, onDelete, createLabel = "New", extraActions, toolbar,
+export const CrudTable: React.FC<CrudTableProps> = ({
+  title = "Record", rows, loading, columns, idKey = "id", rowKey,
+  fields, onCreate, onUpdate, onDelete, createLabel = "New", extraActions, toolbar, card = true,
 }) => {
   const [form] = Form.useForm();
   const [modal, setModal] = useState<{ open: boolean; editing?: any }>({ open: false });
@@ -79,7 +77,7 @@ const CrudPage: React.FC<CrudPageProps> = ({
       setModal({ open: false });
       form.resetFields();
     } catch (e: any) {
-      if (e?.errorFields) return; // validation
+      if (e?.errorFields) return;
       message.error(e?.data?.message || "Save failed");
     } finally {
       setSaving(false);
@@ -111,34 +109,30 @@ const CrudPage: React.FC<CrudPageProps> = ({
       ]
     : columns;
 
+  const table = (
+    <Table
+      rowKey={rowKey ?? ((r: any) => r[idKey] ?? JSON.stringify(r).slice(0, 40))}
+      columns={allColumns}
+      dataSource={rows}
+      loading={loading}
+      size="small"
+      scroll={{ x: "max-content" }}
+      pagination={{ pageSize: 15, showSizeChanger: true }}
+    />
+  );
+
   return (
-    <div className="page-wrapper">
-      <div className="content">
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <div>
-            <h4 className="mb-1">{title}</h4>
-            {subtitle && <p className="text-muted mb-0">{subtitle}</p>}
-          </div>
+    <>
+      {(toolbar || canCreate) && (
+        <div className="d-flex justify-content-end align-items-center mb-2">
           <Space>
             {toolbar}
-            {canCreate && (
-              <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>{createLabel}</Button>
-            )}
+            {canCreate && <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>{createLabel}</Button>}
           </Space>
         </div>
+      )}
 
-        <Card>
-          <Table
-            rowKey={rowKey ?? ((r: any) => r[idKey] ?? JSON.stringify(r).slice(0, 40))}
-            columns={allColumns}
-            dataSource={rows}
-            loading={loading}
-            size="small"
-            scroll={{ x: "max-content" }}
-            pagination={{ pageSize: 15, showSizeChanger: true }}
-          />
-        </Card>
-      </div>
+      {card ? <Card bodyStyle={{ padding: 12 }}>{table}</Card> : table}
 
       {fields && (
         <Modal
@@ -164,8 +158,27 @@ const CrudPage: React.FC<CrudPageProps> = ({
           </Form>
         </Modal>
       )}
-    </div>
+    </>
   );
 };
+
+export interface CrudPageProps extends CrudTableProps {
+  title: string;
+  subtitle?: string;
+}
+
+const CrudPage: React.FC<CrudPageProps> = ({ title, subtitle, toolbar, ...rest }) => (
+  <div className="page-wrapper">
+    <div className="content">
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h4 className="mb-1">{title}</h4>
+          {subtitle && <p className="text-muted mb-0">{subtitle}</p>}
+        </div>
+      </div>
+      <CrudTable title={title} toolbar={toolbar} {...rest} />
+    </div>
+  </div>
+);
 
 export default CrudPage;

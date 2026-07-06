@@ -246,6 +246,7 @@ import ProductSuppliers from "../feature-module/admin/ProductSuppliers";
 import Barcodes from "../feature-module/admin/Barcodes";
 import B2bConnections from "../feature-module/admin/B2bConnections";
 import AdminWarehouses from "../feature-module/admin/Warehouses";
+import TenantCatalog from "../feature-module/admin/TenantCatalog";
 import Permissions from "../feature-module/usermanagement/permissions";
 import DeleteAccount from "../feature-module/usermanagement/deleteaccount";
 import EmployeesGrid from "../feature-module/hrm/employeesgrid";
@@ -1416,6 +1417,13 @@ export const publicRoutes = [
     path: routes.b2bconnections,
     name: "b2bconnections",
     element: (<RequireSuperAdmin><B2bConnections /></RequireSuperAdmin>),
+    route: Route,
+  },
+  {
+    id: 127,
+    path: routes.tenantcatalog,
+    name: "tenantcatalog",
+    element: (<RequireSuperAdmin><TenantCatalog /></RequireSuperAdmin>),
     route: Route,
   },
   {

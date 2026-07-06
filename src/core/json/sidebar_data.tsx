@@ -167,6 +167,7 @@ export const SidebarData = [
           { label: "Tenants", link: "/tenants", icon: <Icon.Globe />, showSubRoute: false, submenu: false },
           { label: "Business Entities", link: "/business-entities", icon: <Icon.Briefcase />, showSubRoute: false, submenu: false },
           { label: "Product Suppliers", link: "/product-suppliers", icon: <Icon.Link />, showSubRoute: false, submenu: false },
+          { label: "Tenant Catalog", link: "/tenant-catalog", icon: <Icon.Package />, showSubRoute: false, submenu: false },
           { label: "B2B Connections", link: "/b2b-connections", icon: <Icon.Share2 />, showSubRoute: false, submenu: false },
           { label: "Barcodes", link: "/barcodes", icon: <Icon.Grid />, showSubRoute: false, submenu: false },
           { label: "Platform Settings", link: "/platform-settings", icon: <Icon.Settings />, showSubRoute: false, submenu: false },

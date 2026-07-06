@@ -188,6 +188,7 @@ export const all_routes = {
   productsuppliers: "/product-suppliers",
   barcodes: "/barcodes",
   b2bconnections: "/b2b-connections",
+  tenantcatalog: "/tenant-catalog",
   permissions: "/permissions",
   deleteaccount: "/delete-account",
   employeegrid: "/employees-grid",
