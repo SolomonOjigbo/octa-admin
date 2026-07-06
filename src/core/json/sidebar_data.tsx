@@ -231,6 +231,7 @@ export const SidebarData = [
         showSubRoute: false,
         submenuHdr: "Reports",
         submenuItems: [
+          { label: "Analytics", link: "/analytics", icon:  <Icon.TrendingUp /> ,showSubRoute: false},
           { label: "Sales Report", link: "/sales-report", icon:  <Icon.BarChart2 /> ,showSubRoute: false},
           { label: "Purchase Report", link: "/purchase-report", icon:  <Icon.PieChart />,showSubRoute: false },
           { label: "Inventory Report", link: "/inventory-report", icon:  <Icon.Inbox />,showSubRoute: false },

@@ -184,17 +184,12 @@ import Variants from "../feature-module/inventory/variants/variant";
 import Suppliers from "../feature-module/people/suppliers";
 // import StoreList from "../core/modals/peoples/storelist";
 import StockAdjustment from "../feature-module/stock/stockAdjustment";
-import SalesReport from "../feature-module/Reports/salesreport";
-import PurchaseReport from "../feature-module/Reports/purchasereport";
-import InventoryReport from "../feature-module/Reports/inventoryreport";
-//import Invoicereport from "../feature-module/Reports/invoicereport";
 import Invoicereport from "../feature-module/Reports/invoice/invoicereport";
-import SupplierReport from "../feature-module/Reports/supplierreport";
-import CustomerReport from "../feature-module/Reports/customerreport";
-import ExpenseReport from "../feature-module/Reports/expensereport";
-import IncomeReport from "../feature-module/Reports/incomereport";
-import TaxReport from "../feature-module/Reports/taxreport";
-import ProfitLoss from "../feature-module/Reports/profitloss";
+// Live cross-tenant reports (replace the empty template shells).
+import {
+  AnalyticsDashboard, SalesReport, PurchaseReport, InventoryReport,
+  SupplierReport, CustomerReport, ExpenseReport, IncomeReport, TaxReport, ProfitLoss,
+} from "../feature-module/admin/reports";
 // import GeneralSettings from "../feature-module/settings/generalsettings/generalsettings";
 // import SecuritySettings from "../feature-module/settings/generalsettings/securitysettings";
 // import Notification from "../feature-module/settings/generalsettings/notification";
@@ -1460,6 +1455,13 @@ export const publicRoutes = [
     path: routes.auditlogs,
     name: "auditlogs",
     element: (<RequireSuperAdmin><AuditLogs /></RequireSuperAdmin>),
+    route: Route,
+  },
+  {
+    id: 133,
+    path: routes.analytics,
+    name: "analytics",
+    element: (<RequireSuperAdmin><AnalyticsDashboard /></RequireSuperAdmin>),
     route: Route,
   },
   {

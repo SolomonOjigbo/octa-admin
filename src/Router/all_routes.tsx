@@ -194,6 +194,7 @@ export const all_routes = {
   possessions: "/pos-sessions",
   inventorymovements: "/inventory-movements",
   auditlogs: "/audit-logs",
+  analytics: "/analytics",
   permissions: "/permissions",
   deleteaccount: "/delete-account",
   employeegrid: "/employees-grid",
