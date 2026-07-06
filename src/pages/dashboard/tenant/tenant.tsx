@@ -138,6 +138,14 @@ console.log("Tenants from Redux:", tenants);
         return (
           <div className="edit-delete-action">
             <Link
+              to={`/tenants/${record.tenantId}/360`}
+              className="me-2 p-2"
+              title="360 view"
+            >
+              <Eye />
+            </Link>
+
+            <Link
               to="#"
               className="me-2 p-2"
               data-bs-toggle="modal"

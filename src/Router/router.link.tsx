@@ -9,6 +9,8 @@ import Forgotpassword from "../pages/forgotpassword/forgotpassword";
 import Register from "../pages/register/register";
 import Customers from "../pages/dashboard/customers/customers";
 import Tenants from "../pages/dashboard/tenant/tenant";
+import Tenant360 from "../feature-module/tenants/Tenant360";
+import RequireSuperAdmin from "./RequireSuperAdmin";
 import Profile from "../pages/dashboard/profile";
 
 import ProductList from "../pages/dashboard/products/productlist"; 
@@ -1470,6 +1472,17 @@ export const publicRoutes = [
     path: routes.tenants,
     name: "tenants",
     element: <Tenants />,
+    route: Route,
+  },
+  {
+    id: 120,
+    path: "/tenants/:id/360",
+    name: "tenant360",
+    element: (
+      <RequireSuperAdmin>
+        <Tenant360 />
+      </RequireSuperAdmin>
+    ),
     route: Route,
   },
 ];
