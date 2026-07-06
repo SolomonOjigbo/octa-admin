@@ -11,12 +11,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import rootReducer from "./reducer"; 
+import rootReducer from "./reducer";
+import { baseApi } from "./services/baseApi";
 
-// Persist config
+// Persist config. The RTK Query cache ('api') is blacklisted so stale server data
+// is never rehydrated from localStorage — it refetches fresh on load.
 const persistConfig = {
   key: "root",
   storage,
+  blacklist: [baseApi.reducerPath],
 };
 
 // Persist reducer
@@ -29,7 +32,7 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
       thunk: true,
-    }),
+    }).concat(baseApi.middleware),
 });
 
 // Types

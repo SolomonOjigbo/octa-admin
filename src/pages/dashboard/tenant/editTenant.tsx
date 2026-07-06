@@ -10,6 +10,16 @@ interface TenantEditModalProps {
   selectedTenantEdit: Tenant | null;
 }
 
+// Tenant classification options (matches backend TenantType enum).
+const TENANT_TYPES = [
+  { value: "RETAIL_PHARMACY", label: "Retail Pharmacy" },
+  { value: "WHOLESALE_PHARMACY", label: "Wholesale Pharmacy" },
+  { value: "HOSPITAL", label: "Hospital" },
+  { value: "CLINIC", label: "Wellness Center/Clinic" },
+  { value: "DIAGNOSTIC_LAB", label: "Diagnostic Centre" },
+  { value: "DISTRIBUTOR", label: "Distributor" },
+];
+
 const TenantEditModal: React.FC<TenantEditModalProps> = ({
   selectedTenantEdit,
 }) => {
@@ -24,7 +34,7 @@ const TenantEditModal: React.FC<TenantEditModalProps> = ({
   }, [selectedTenantEdit]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -39,7 +49,7 @@ const TenantEditModal: React.FC<TenantEditModalProps> = ({
   slug: form.slug,
   legalName: form.legalName,
   contactEmail: form.contactEmail,
-  //type: form.type,
+  type: form.type,
 };
       await dispatch(
         updateGlobalTenant(selectedTenantEdit.id, payload)
@@ -135,6 +145,28 @@ const TenantEditModal: React.FC<TenantEditModalProps> = ({
                       value={form.contactEmail || ""}
                       onChange={handleChange}
                     />
+                  </div>
+                </div>
+
+                {/* Business Type (classification) */}
+                <div className="col-lg-6">
+                  <div className="input-blocks">
+                    <label>Business Type</label>
+                    <select
+                      name="type"
+                      className="form-control"
+                      value={form.type || ""}
+                      onChange={handleChange}
+                    >
+                      <option value="" disabled>
+                        Select type
+                      </option>
+                      {TENANT_TYPES.map((t) => (
+                        <option key={t.value} value={t.value}>
+                          {t.label}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 

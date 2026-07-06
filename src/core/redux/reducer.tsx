@@ -12,13 +12,14 @@ import user from "./slices/user"
 import store from "./slices/store"
 import invoice from "./slices/invoice"
 import tenant from "./slices/tenantSlice";
+import { baseApi } from "./services/baseApi";
 
 
 import initialState from "./initial.value";
 
 const rootReducer = combineReducers({
   status: statusReducer,
-  global: globalReducer, 
+  global: globalReducer,
   auth: authReducer,
   globalProduct: globalProductReducer,
   globalCategory: globalCategoryReducer,
@@ -30,6 +31,8 @@ const rootReducer = combineReducers({
   globalVariant: globalVariant,
   invoice: invoice,
   tenant: tenant,
+  // RTK Query cache (new integrations). Not persisted — see persist blacklist.
+  [baseApi.reducerPath]: baseApi.reducer,
 });
 
 export default rootReducer;
