@@ -154,10 +154,25 @@ export const SidebarData = [
           { label: "Suppliers", link: "/suppliers", icon:  <Icon.Users />,showSubRoute: false, submenu: false },
           { label: "Stores", link: "/store-list", icon:  <Icon.Home  />,showSubRoute: false,submenu: false },
           { label: "Warehouses", link: "/warehouse", icon: <Icon.Archive />,showSubRoute: false,submenu: false },
-     
+
         ]
       },
-      
+
+      {
+        label: "Platform",
+        submenuOpen: true,
+        showSubRoute: false,
+        submenuHdr: "Platform",
+        submenuItems: [
+          { label: "Tenants", link: "/tenants", icon: <Icon.Globe />, showSubRoute: false, submenu: false },
+          { label: "Business Entities", link: "/business-entities", icon: <Icon.Briefcase />, showSubRoute: false, submenu: false },
+          { label: "Product Suppliers", link: "/product-suppliers", icon: <Icon.Link />, showSubRoute: false, submenu: false },
+          { label: "B2B Connections", link: "/b2b-connections", icon: <Icon.Share2 />, showSubRoute: false, submenu: false },
+          { label: "Barcodes", link: "/barcodes", icon: <Icon.Grid />, showSubRoute: false, submenu: false },
+          { label: "Platform Settings", link: "/platform-settings", icon: <Icon.Settings />, showSubRoute: false, submenu: false },
+        ]
+      },
+
       {
         label: "HRM",
         submenuOpen: true,

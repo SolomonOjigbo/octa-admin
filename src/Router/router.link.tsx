@@ -240,6 +240,11 @@ import Undermaintainence from "../feature-module/pages/undermaintainence";
 import Users from "../feature-module/usermanagement/users";
 import RolesPermissions from "../feature-module/usermanagement/RolesPermissions";
 import Sessions from "../feature-module/usermanagement/Sessions";
+import BusinessEntities from "../feature-module/admin/BusinessEntities";
+import PlatformSettings from "../feature-module/admin/PlatformSettings";
+import ProductSuppliers from "../feature-module/admin/ProductSuppliers";
+import Barcodes from "../feature-module/admin/Barcodes";
+import B2bConnections from "../feature-module/admin/B2bConnections";
 import Permissions from "../feature-module/usermanagement/permissions";
 import DeleteAccount from "../feature-module/usermanagement/deleteaccount";
 import EmployeesGrid from "../feature-module/hrm/employeesgrid";
@@ -1376,6 +1381,41 @@ export const publicRoutes = [
         <Sessions />
       </RequireSuperAdmin>
     ),
+    route: Route,
+  },
+  {
+    id: 122,
+    path: routes.businessentities,
+    name: "businessentities",
+    element: (<RequireSuperAdmin><BusinessEntities /></RequireSuperAdmin>),
+    route: Route,
+  },
+  {
+    id: 123,
+    path: routes.platformsettings,
+    name: "platformsettings",
+    element: (<RequireSuperAdmin><PlatformSettings /></RequireSuperAdmin>),
+    route: Route,
+  },
+  {
+    id: 124,
+    path: routes.productsuppliers,
+    name: "productsuppliers",
+    element: (<RequireSuperAdmin><ProductSuppliers /></RequireSuperAdmin>),
+    route: Route,
+  },
+  {
+    id: 125,
+    path: routes.barcodes,
+    name: "barcodes",
+    element: (<RequireSuperAdmin><Barcodes /></RequireSuperAdmin>),
+    route: Route,
+  },
+  {
+    id: 126,
+    path: routes.b2bconnections,
+    name: "b2bconnections",
+    element: (<RequireSuperAdmin><B2bConnections /></RequireSuperAdmin>),
     route: Route,
   },
   {
