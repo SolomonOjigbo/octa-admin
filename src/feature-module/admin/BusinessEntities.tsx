@@ -1,31 +1,38 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   useGetBusinessEntitiesQuery,
+  useCreateBusinessEntityMutation,
   useUpdateBusinessEntityMutation,
   useDeleteBusinessEntityMutation,
 } from "../../core/redux/services/adminPhase2Api";
+import { useGetTenantsQuery } from "../../core/redux/services/adminTenantApi";
 import CrudPage, { CrudField } from "./common/CrudPage";
-
-const fields: CrudField[] = [
-  { name: "name", label: "Name", required: true },
-  { name: "legalName", label: "Legal name" },
-  { name: "address", label: "Address", type: "textarea" },
-  { name: "email", label: "Email" },
-  { name: "phone", label: "Phone" },
-];
 
 const columns = [
   { title: "Name", dataIndex: "name" },
-  { title: "Legal name", dataIndex: "legalName", render: (v: string) => v || "—" },
-  { title: "Type", dataIndex: "type", render: (v: string) => v || "—" },
+  { title: "Tax ID", dataIndex: "taxId", render: (v: string) => v || "—" },
+  { title: "Legal address", dataIndex: "legalAddress", ellipsis: true, render: (v: string) => v || "—" },
   { title: "Tenant", dataIndex: "tenantId", ellipsis: true, render: (v: string) => v || "—" },
   { title: "Created", dataIndex: "createdAt", render: (v: string) => (v ? new Date(v).toLocaleDateString() : "—") },
 ];
 
 const BusinessEntities: React.FC = () => {
   const { data = [], isFetching } = useGetBusinessEntitiesQuery();
+  const { data: tenants = [] } = useGetTenantsQuery();
+  const [create] = useCreateBusinessEntityMutation();
   const [update] = useUpdateBusinessEntityMutation();
   const [remove] = useDeleteBusinessEntityMutation();
+
+  const fields: CrudField[] = useMemo(
+    () => [
+      { name: "tenantId", label: "Tenant", type: "select", required: true, options: tenants.map((t: any) => ({ value: t.id, label: t.name || t.id })) },
+      { name: "name", label: "Name", required: true },
+      { name: "taxId", label: "Tax ID" },
+      { name: "legalAddress", label: "Legal address", type: "textarea" },
+    ],
+    [tenants]
+  );
+
   return (
     <CrudPage
       title="Business Entities"
@@ -34,7 +41,8 @@ const BusinessEntities: React.FC = () => {
       loading={isFetching}
       columns={columns}
       fields={fields}
-      onUpdate={(id, values) => update({ id, ...values }).unwrap()}
+      onCreate={(values) => create(values).unwrap()}
+      onUpdate={(id, values) => update({ id, name: values.name, taxId: values.taxId, legalAddress: values.legalAddress }).unwrap()}
       onDelete={(id) => remove(id).unwrap()}
     />
   );

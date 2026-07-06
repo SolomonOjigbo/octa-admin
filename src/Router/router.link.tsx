@@ -245,6 +245,7 @@ import PlatformSettings from "../feature-module/admin/PlatformSettings";
 import ProductSuppliers from "../feature-module/admin/ProductSuppliers";
 import Barcodes from "../feature-module/admin/Barcodes";
 import B2bConnections from "../feature-module/admin/B2bConnections";
+import AdminWarehouses from "../feature-module/admin/Warehouses";
 import Permissions from "../feature-module/usermanagement/permissions";
 import DeleteAccount from "../feature-module/usermanagement/deleteaccount";
 import EmployeesGrid from "../feature-module/hrm/employeesgrid";
@@ -257,7 +258,6 @@ import LeaveTypes from "../feature-module/hrm/leavetypes";
 import { Units } from "../feature-module/inventory/units";
 // import TaxRates from "../feature-module/settings/financialsettings/taxrates";
 // import CurrencySettings from "../feature-module/settings/financialsettings/currencysettings";
-import WareHouses from "../core/modals/peoples/warehouses";
 import Coupons from "../feature-module/coupons/coupons";
 import { all_routes } from "./all_routes";
 export const publicRoutes = [
@@ -1485,7 +1485,7 @@ export const publicRoutes = [
     id: 114,
     path: routes.warehouses,
     name: "warehouses",
-    element: <WareHouses />,
+    element: (<RequireSuperAdmin><AdminWarehouses /></RequireSuperAdmin>),
     route: Route,
   },
   {

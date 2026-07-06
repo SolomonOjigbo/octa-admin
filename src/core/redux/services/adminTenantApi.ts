@@ -23,6 +23,14 @@ export interface AdminTenant {
 
 export const adminTenantApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getTenants: builder.query<AdminTenant[], void>({
+      query: () => 'admin/tenants',
+      transformResponse: (r: any) => {
+        const v = r && typeof r === 'object' ? (r.data ?? r.tenants ?? r) : r;
+        return Array.isArray(v) ? v : [];
+      },
+      providesTags: [{ type: 'Tenant', id: 'LIST' }],
+    }),
     getTenant: builder.query<AdminTenant, string>({
       query: (id) => `admin/tenants/${id}`,
       transformResponse: unwrap,
@@ -110,6 +118,7 @@ export const adminTenantApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useGetTenantsQuery,
   useGetTenantQuery,
   useGetTenantStoresQuery,
   useGetTenantWarehousesQuery,

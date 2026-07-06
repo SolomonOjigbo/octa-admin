@@ -17,6 +17,16 @@ export const adminPhase2Api = baseApi.injectEndpoints({
       transformResponse: list,
       providesTags: [{ type: "BusinessEntity", id: "LIST" }],
     }),
+    createBusinessEntity: builder.mutation<any, { tenantId: string; [k: string]: any }>({
+      // Route carries :tenantId; the controller reads tenantId from the body, so send both.
+      query: ({ tenantId, ...rest }) => ({
+        url: `admin/business-entities/tenant/${tenantId}`,
+        method: "POST",
+        body: { tenantId, ...rest },
+      }),
+      transformResponse: one,
+      invalidatesTags: [{ type: "BusinessEntity", id: "LIST" }],
+    }),
     updateBusinessEntity: builder.mutation<any, { id: string; [k: string]: any }>({
       query: ({ id, ...body }) => ({ url: `admin/business-entities/${id}`, method: "PUT", body }),
       transformResponse: one,
@@ -64,6 +74,35 @@ export const adminPhase2Api = baseApi.injectEndpoints({
       invalidatesTags: [{ type: "Barcode", id: "LIST" }],
     }),
 
+    // --- Warehouses (tenant-scoped; no list-all) ---
+    getWarehousesByTenant: builder.query<any[], string>({
+      query: (tenantId) => `admin/warehouse/tenant/${tenantId}/warehouses`,
+      transformResponse: list,
+      providesTags: (_r, _e, tenantId) => [{ type: "Warehouse", id: tenantId }],
+    }),
+    createWarehouse: builder.mutation<any, { tenantId: string; [k: string]: any }>({
+      query: ({ tenantId, ...body }) => ({
+        url: `admin/warehouse/tenant/${tenantId}/warehouses`,
+        method: "POST",
+        body,
+      }),
+      transformResponse: one,
+      invalidatesTags: (_r, _e, { tenantId }) => [{ type: "Warehouse", id: tenantId }],
+    }),
+    updateWarehouse: builder.mutation<any, { tenantId: string; warehouseId: string; [k: string]: any }>({
+      query: ({ tenantId, warehouseId, ...body }) => ({
+        url: `admin/warehouse/tenant/${tenantId}/warehouses/${warehouseId}`,
+        method: "PUT",
+        body,
+      }),
+      transformResponse: one,
+      invalidatesTags: (_r, _e, { tenantId }) => [{ type: "Warehouse", id: tenantId }],
+    }),
+    deleteWarehouse: builder.mutation<any, { id: string; tenantId: string }>({
+      query: ({ id }) => ({ url: `admin/warehouse/delete/${id}`, method: "DELETE" }),
+      invalidatesTags: (_r, _e, { tenantId }) => [{ type: "Warehouse", id: tenantId }],
+    }),
+
     // --- B2B connections ---
     getB2bConnections: builder.query<any[], void>({
       query: () => "admin/b2bconnections",
@@ -87,8 +126,13 @@ export const adminPhase2Api = baseApi.injectEndpoints({
 
 export const {
   useGetBusinessEntitiesQuery,
+  useCreateBusinessEntityMutation,
   useUpdateBusinessEntityMutation,
   useDeleteBusinessEntityMutation,
+  useGetWarehousesByTenantQuery,
+  useCreateWarehouseMutation,
+  useUpdateWarehouseMutation,
+  useDeleteWarehouseMutation,
   useGetSettingsQuery,
   useToggleSettingMutation,
   useDeleteSettingMutation,

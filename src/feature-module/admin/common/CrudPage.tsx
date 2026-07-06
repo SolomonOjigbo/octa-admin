@@ -35,6 +35,8 @@ export interface CrudPageProps {
   createLabel?: string;
   /** Extra per-row action nodes (toggles, activate/deactivate, etc.). */
   extraActions?: (record: any) => React.ReactNode;
+  /** Header content (e.g. a tenant filter) rendered left of the New button. */
+  toolbar?: React.ReactNode;
 }
 
 const renderField = (f: CrudField) => {
@@ -49,7 +51,7 @@ const renderField = (f: CrudField) => {
 
 const CrudPage: React.FC<CrudPageProps> = ({
   title, subtitle, rows, loading, columns, idKey = "id", rowKey,
-  fields, onCreate, onUpdate, onDelete, createLabel = "New", extraActions,
+  fields, onCreate, onUpdate, onDelete, createLabel = "New", extraActions, toolbar,
 }) => {
   const [form] = Form.useForm();
   const [modal, setModal] = useState<{ open: boolean; editing?: any }>({ open: false });
@@ -117,9 +119,12 @@ const CrudPage: React.FC<CrudPageProps> = ({
             <h4 className="mb-1">{title}</h4>
             {subtitle && <p className="text-muted mb-0">{subtitle}</p>}
           </div>
-          {canCreate && (
-            <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>{createLabel}</Button>
-          )}
+          <Space>
+            {toolbar}
+            {canCreate && (
+              <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>{createLabel}</Button>
+            )}
+          </Space>
         </div>
 
         <Card>
