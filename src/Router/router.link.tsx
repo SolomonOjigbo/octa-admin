@@ -238,7 +238,8 @@ import Blankpage from "../feature-module/pages/blankpage";
 import Comingsoon from "../feature-module/pages/comingsoon";
 import Undermaintainence from "../feature-module/pages/undermaintainence";
 import Users from "../feature-module/usermanagement/users";
-import RolesPermissions from "../feature-module/usermanagement/rolespermissions";
+import RolesPermissions from "../feature-module/usermanagement/RolesPermissions";
+import Sessions from "../feature-module/usermanagement/Sessions";
 import Permissions from "../feature-module/usermanagement/permissions";
 import DeleteAccount from "../feature-module/usermanagement/deleteaccount";
 import EmployeesGrid from "../feature-module/hrm/employeesgrid";
@@ -1359,7 +1360,22 @@ export const publicRoutes = [
     id: 105,
     path: routes.rolespermission,
     name: "rolespermission",
-    element: <RolesPermissions />,
+    element: (
+      <RequireSuperAdmin>
+        <RolesPermissions />
+      </RequireSuperAdmin>
+    ),
+    route: Route,
+  },
+  {
+    id: 121,
+    path: routes.sessions,
+    name: "sessions",
+    element: (
+      <RequireSuperAdmin>
+        <Sessions />
+      </RequireSuperAdmin>
+    ),
     route: Route,
   },
   {

@@ -219,6 +219,7 @@ export const SidebarData = [
         submenuItems: [
           { label: "Users", link: "/users", icon:  <Icon.UserCheck />,showSubRoute: false },
           { label: "Roles & Permissions", link: "/roles-permissions", icon:  <Icon.UserCheck />,showSubRoute: false },
+          { label: "Active Sessions", link: "/sessions", icon:  <Icon.Monitor />,showSubRoute: false },
           { label: "Delete Account Request", link: "/delete-account", icon:  <Icon.Lock />,showSubRoute: false }
         ]
       },

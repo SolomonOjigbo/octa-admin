@@ -11,6 +11,7 @@ import { Filter, Sliders, PlusCircle, Edit, Trash2, Eye, User, Globe, RotateCcw 
 import CustomerModal from "../../core/modals/peoples/customerModal";
 import CustomerEditModal from "./editCustomer";
 import { fetchGlobalCustomers, deleteGlobalCustomer } from "../../core/redux/slices/customer";
+import { useToggleCustomerStatusMutation } from "../../core/redux/services/adminStatusApi";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import ImageWithBasePath from "../../core/img/imagewithbasebath";
 import { exportCustomersToExcel, exportCustomersToPDF } from "../inventory/DataExport/exportCustomer";
@@ -23,6 +24,17 @@ const Customers = () => {
   const [searchText, setSearchText] = useState("");
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [selectedCustomerEdit, setSelectedCustomerEdit] = useState<any>(null);
+  const [toggleCustomerStatus] = useToggleCustomerStatusMutation();
+
+  // Toggle a customer's active status via the real backend endpoint, then refresh.
+  const handleToggleStatus = async (id: string) => {
+    try {
+      await toggleCustomerStatus(id).unwrap();
+      dispatch(fetchGlobalCustomers());
+    } catch {
+      Swal.fire("Error", "Couldn't update the customer's status.", "error");
+    }
+  };
 
   // Fetch customers on mount
   useEffect(() => {
@@ -142,14 +154,19 @@ const Customers = () => {
               <Edit className="feather-edit" />
             </Link>
             <Link
+              className="p-2"
+              to="#"
+              title={customer?.isActive === false ? "Activate" : "Deactivate"}
+              onClick={() => handleToggleStatus(record.customerId)}
+            >
+              <RotateCcw className={customer?.isActive === false ? "text-success" : "text-warning"} />
+            </Link>
+            <Link
               className="confirm-text p-2"
               to="#"
               onClick={() => showConfirmationAlert(record.customerId)}
             >
               <Trash2 className="feather-trash-2" />
-            </Link>
-            <Link className="me-2 p-2" to="#">
-              <Eye className="feather-view" />
             </Link>
           </div>
         );

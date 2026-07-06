@@ -182,6 +182,7 @@ export const all_routes = {
   undermaintenance: "/under-maintenance",
   users: "/users",
   rolespermission: "/roles-permissions",
+  sessions: "/sessions",
   permissions: "/permissions",
   deleteaccount: "/delete-account",
   employeegrid: "/employees-grid",
