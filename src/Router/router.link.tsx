@@ -164,7 +164,6 @@ import Email from "../feature-module/Application/email";
 import Callhistory from "../feature-module/Application/callhistory";
 import ToDo from "../feature-module/Application/todo";
 import QRcode from "../feature-module/inventory/qrcode";
-import PurchasesList from "../feature-module/purchases/purchaseslist";
 import PurchaseOrderReport from "../feature-module/purchases/purchaseorderreport";
 import PurchaseReturns from "../feature-module/purchases/purchasereturns";
 // import Appearance from "../feature-module/settings/websitesettings/appearance";
@@ -184,9 +183,7 @@ import PurchaseReturns from "../feature-module/purchases/purchasereturns";
 import Variants from "../feature-module/inventory/variants/variant";
 import Suppliers from "../feature-module/people/suppliers";
 // import StoreList from "../core/modals/peoples/storelist";
-import Managestock from "../feature-module/stock/managestock";
 import StockAdjustment from "../feature-module/stock/stockAdjustment";
-import StockTransfer from "../feature-module/stock/stockTransfer";
 import SalesReport from "../feature-module/Reports/salesreport";
 import PurchaseReport from "../feature-module/Reports/purchasereport";
 import InventoryReport from "../feature-module/Reports/inventoryreport";
@@ -216,7 +213,6 @@ import Holidays from "../feature-module/hrm/holidays";
 import SalesList from "../feature-module/sales/saleslist";
 import InvoiceReport from "../feature-module/sales/invoicereport";
 import SalesReturn from "../feature-module/sales/salesreturn";
-import QuotationList from "../feature-module/sales/quotationlist";
 import Notes from "../feature-module/Application/notes";
 import FileManager from "../feature-module/Application/filemanager";
 //import Profile from "../feature-module/pages/profile";
@@ -247,6 +243,10 @@ import Barcodes from "../feature-module/admin/Barcodes";
 import B2bConnections from "../feature-module/admin/B2bConnections";
 import AdminWarehouses from "../feature-module/admin/Warehouses";
 import TenantCatalog from "../feature-module/admin/TenantCatalog";
+import {
+  Transactions, Payments, PosSessions, Stock, InventoryMovements,
+  StockTransfers, Quotations, PurchaseOrders,
+} from "../feature-module/admin/operations";
 import Permissions from "../feature-module/usermanagement/permissions";
 import DeleteAccount from "../feature-module/usermanagement/deleteaccount";
 import EmployeesGrid from "../feature-module/hrm/employeesgrid";
@@ -960,7 +960,7 @@ export const publicRoutes = [
     id: 68,
     path: routes.purchaselist,
     name: "purchaselist",
-    element: <PurchasesList />,
+    element: (<RequireSuperAdmin><PurchaseOrders /></RequireSuperAdmin>),
     route: Route,
   },
   {
@@ -1093,7 +1093,7 @@ export const publicRoutes = [
     id: 87,
     path: routes.managestock,
     name: "managestock",
-    element: <Managestock />,
+    element: (<RequireSuperAdmin><Stock /></RequireSuperAdmin>),
     route: Route,
   },
   {
@@ -1107,7 +1107,7 @@ export const publicRoutes = [
     id: 89,
     path: routes.stocktransfer,
     name: "stocktransfer",
-    element: <StockTransfer />,
+    element: (<RequireSuperAdmin><StockTransfers /></RequireSuperAdmin>),
     route: Route,
   },
   {
@@ -1324,7 +1324,7 @@ export const publicRoutes = [
     id: 103,
     path: routes.quotationlist,
     name: "quotationlist",
-    element: <QuotationList />,
+    element: (<RequireSuperAdmin><Quotations /></RequireSuperAdmin>),
     route: Route,
   },
   {
@@ -1424,6 +1424,34 @@ export const publicRoutes = [
     path: routes.tenantcatalog,
     name: "tenantcatalog",
     element: (<RequireSuperAdmin><TenantCatalog /></RequireSuperAdmin>),
+    route: Route,
+  },
+  {
+    id: 128,
+    path: routes.transactions,
+    name: "transactions",
+    element: (<RequireSuperAdmin><Transactions /></RequireSuperAdmin>),
+    route: Route,
+  },
+  {
+    id: 129,
+    path: routes.payments,
+    name: "payments",
+    element: (<RequireSuperAdmin><Payments /></RequireSuperAdmin>),
+    route: Route,
+  },
+  {
+    id: 130,
+    path: routes.possessions,
+    name: "possessions",
+    element: (<RequireSuperAdmin><PosSessions /></RequireSuperAdmin>),
+    route: Route,
+  },
+  {
+    id: 131,
+    path: routes.inventorymovements,
+    name: "inventorymovements",
+    element: (<RequireSuperAdmin><InventoryMovements /></RequireSuperAdmin>),
     route: Route,
   },
   {

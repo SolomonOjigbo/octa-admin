@@ -110,6 +110,15 @@ export const baseApi = createApi({
     'TenantCategory',
     'TenantCatalogProduct',
     'TenantSupplier',
+    // Phase 3 operational views
+    'Transaction',
+    'Payment',
+    'PosSession',
+    'Stock',
+    'InventoryMovement',
+    'StockTransfer',
+    'Quotation',
+    'PurchaseOrder',
   ],
   endpoints: () => ({}),
 });

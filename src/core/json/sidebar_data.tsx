@@ -175,6 +175,23 @@ export const SidebarData = [
       },
 
       {
+        label: "Operations",
+        submenuOpen: true,
+        showSubRoute: false,
+        submenuHdr: "Operations",
+        submenuItems: [
+          { label: "Transactions", link: "/transactions", icon: <Icon.CreditCard />, showSubRoute: false, submenu: false },
+          { label: "Payments", link: "/payments", icon: <Icon.DollarSign />, showSubRoute: false, submenu: false },
+          { label: "POS Sessions", link: "/pos-sessions", icon: <Icon.Monitor />, showSubRoute: false, submenu: false },
+          { label: "Purchase Orders", link: "/purchase-list", icon: <Icon.ShoppingCart />, showSubRoute: false, submenu: false },
+          { label: "Quotations", link: "/quotation-list", icon: <Icon.FileText />, showSubRoute: false, submenu: false },
+          { label: "Stock", link: "/manage-stocks", icon: <Icon.Layers />, showSubRoute: false, submenu: false },
+          { label: "Stock Transfers", link: "/stock-transfer", icon: <Icon.Repeat />, showSubRoute: false, submenu: false },
+          { label: "Inventory Movements", link: "/inventory-movements", icon: <Icon.Activity />, showSubRoute: false, submenu: false },
+        ]
+      },
+
+      {
         label: "HRM",
         submenuOpen: true,
         showSubRoute: false,
