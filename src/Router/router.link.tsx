@@ -157,6 +157,7 @@ import B2bConnections from "../feature-module/admin/B2bConnections";
 import AdminWarehouses from "../feature-module/admin/Warehouses";
 import TenantCatalog from "../feature-module/admin/TenantCatalog";
 import AuditLogs from "../feature-module/admin/AuditLogs";
+import KycReview from "../feature-module/compliance/KycReview";
 import {
   Transactions, Payments, PosSessions, Stock, InventoryMovements,
   StockTransfers, Quotations, PurchaseOrders,
@@ -779,6 +780,13 @@ export const publicRoutes = [
     path: routes.auditlogs,
     name: "auditlogs",
     element: (<RequireSuperAdmin><AuditLogs /></RequireSuperAdmin>),
+    route: Route,
+  },
+  {
+    id: 134,
+    path: routes.kycreview,
+    name: "kycreview",
+    element: (<RequireSuperAdmin><KycReview /></RequireSuperAdmin>),
     route: Route,
   },
   {

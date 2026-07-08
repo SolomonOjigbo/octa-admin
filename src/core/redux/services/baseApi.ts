@@ -119,6 +119,9 @@ export const baseApi = createApi({
     'StockTransfer',
     'Quotation',
     'PurchaseOrder',
+    // Compliance / KYC
+    'Kyc',
+    'KycQueue',
   ],
   endpoints: () => ({}),
 });
