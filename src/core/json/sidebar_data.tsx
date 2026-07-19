@@ -141,6 +141,7 @@ export const SidebarData = [
           { label: "Barcodes", link: "/barcodes", icon: <Icon.Grid />, showSubRoute: false, submenu: false },
           { label: "Platform Settings", link: "/platform-settings", icon: <Icon.Settings />, showSubRoute: false, submenu: false },
           { label: "Audit Logs", link: "/audit-logs", icon: <Icon.Shield />, showSubRoute: false, submenu: false },
+          { label: "KYC Review", link: "/kyc-review", icon: <Icon.CheckSquare />, showSubRoute: false, submenu: false },
         ]
       },
 
