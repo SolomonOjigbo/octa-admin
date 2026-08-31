@@ -1,0 +1,38 @@
+name: Lint
+
+# ESLint gate for octa-admin.
+#
+# Until 2026-08-31 `npm run lint` ran `eslint .` with no configuration file at
+# all — it exited 0 without checking a single file (the same vacuous gate
+# octa-frontend had). The first real run found 56 errors: two unreferenced
+# Dreams-template files that would throw on mount (an unimported DatePicker, an
+# undefined init()), an undefined `logo` on the dashboard product list, a
+# commented-out useSelector whose variable was still used, and 48 mis-ordered
+# imports. Those are fixed and the baseline is 0 errors / 0 warnings; this
+# keeps it there.
+
+on:
+  push:
+    branches: [teaspoon/core, main, staging]
+  pull_request:
+    branches: [teaspoon/core, main, staging]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # No .npmrc needed here (unlike octa-web): this repo builds with
+      # TypeScript 4.9.5, inside react-scripts 5's peer range — the ERESOLVE
+      # only appeared while typescript was an UNDECLARED phantom dependency.
+      - name: Install dependencies
+        run: npm ci
+
+      - name: ESLint (0 errors, 0 warnings)
+        run: npm run lint -- --max-warnings=0

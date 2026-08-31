@@ -148,7 +148,7 @@ const Header = () => {
     document?.querySelector("html")?.classList?.toggle("menu-opened");
   };
 
-  let pathname = location.pathname;
+  let pathname = window.location.pathname;
 
   const exclusionArray = [
     "/reactjs/template/dream-pos/index-three",

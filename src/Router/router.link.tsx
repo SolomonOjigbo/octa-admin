@@ -74,10 +74,6 @@ import VariantAttributes from "../feature-module/inventory/variantattributes";
 import Warranty from "../feature-module/inventory/warranty";
 import PrintBarcode from "../feature-module/inventory/printbarcode";
 
-
-
-const routes = all_routes;
-
 // import Chats from "../feature-module/Application/chat";
 import ExpensesList from "../feature-module/FinanceAccounts/expenseslist";
 import ExpenseCategory from "../feature-module/FinanceAccounts/expensecategory";
@@ -170,6 +166,10 @@ import { Units } from "../feature-module/inventory/units";
 // import CurrencySettings from "../feature-module/settings/financialsettings/currencysettings";
 import Coupons from "../feature-module/coupons/coupons";
 import { all_routes } from "./all_routes";
+
+
+
+const routes = all_routes;
 export const publicRoutes = [
   {
     id: 1,
