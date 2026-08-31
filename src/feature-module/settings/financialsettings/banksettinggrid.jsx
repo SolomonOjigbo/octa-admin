@@ -9,10 +9,13 @@ import EditBankAccount from '../../../core/modals/settings/editbankaccount';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 import SettingsSideBar from '../settingssidebar';
-import { allSettled } from 'q';
+import { all_routes } from '../../../Router/all_routes';
 
 const BankSettingGrid = () => {
-    const route=allSettled
+    // Was `allSettled` from the q promise library — an IDE auto-import
+    // accident (all_routes intended); route.banksettingslist on a function
+    // is undefined, so these toggle links pointed at <Link to={undefined}>.
+    const route = all_routes
 
     const dispatch = useDispatch();
     const data = useSelector((state) => state.toggle_header);

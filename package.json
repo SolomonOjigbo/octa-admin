@@ -4,6 +4,7 @@
   "homepage": ".",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^5.3.3",
     "@ckeditor/ckeditor5-build-classic": "^39.0.2",
     "@ckeditor/ckeditor5-react": "^6.2.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
@@ -70,6 +71,7 @@
     "react-sweetalert2": "^0.6.0",
     "react-tag-input-component": "^2.0.2",
     "react-timepicker": "^2.0.2",
+    "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
     "sass": "^1.72.0",
     "slick-carousel": "^1.8.1",
