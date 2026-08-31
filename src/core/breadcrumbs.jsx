@@ -177,14 +177,14 @@ const Breadcrumbs = (props) => {
       </div>
     );
   } else if (
-    location.pathname == "/expense-list" ||
-    location.pathname == "/expense-category" ||
-    location.pathname == "/customers" ||
-    location.pathname == "/warehouse" ||
-    location.pathname == "/store-list" ||
-    location.pathname == "/suppliers" ||
-    location.pathname == "/manage-stocks" ||
-    location.pathname == "/stock-adjustment"
+    location.pathname === "/expense-list" ||
+    location.pathname === "/expense-category" ||
+    location.pathname === "/customers" ||
+    location.pathname === "/warehouse" ||
+    location.pathname === "/store-list" ||
+    location.pathname === "/suppliers" ||
+    location.pathname === "/manage-stocks" ||
+    location.pathname === "/stock-adjustment"
   ) {
     addButton = (
       <div className="page-header">

@@ -562,9 +562,9 @@ const showConfirmationAlert = () => {
 
         <td>
           <div className="productimgname">
-            <Link to="#" className="assets/img/logo-small.png">
+            <Link to="#">
               <ImageWithBasePath
-                src={p.image || logo}
+                src={p.image || "assets/img/logo-small.png"}
                 alt={p.name}
               />
             </Link>

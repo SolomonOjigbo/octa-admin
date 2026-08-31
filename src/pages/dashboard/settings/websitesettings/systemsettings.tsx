@@ -10,7 +10,7 @@ import SettingsSideBar from '../settingssidebar';
 const SystemSettings = () => {
 
     const dispatch = useDispatch();
-    //const data = useSelector((state) => state.toggle_header);
+    const data = useSelector((state: any) => state.toggle_header);
 
     const renderRefreshTooltip = (props) => (
         <Tooltip id="refresh-tooltip" {...props}>
